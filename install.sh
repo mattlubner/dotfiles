@@ -21,6 +21,10 @@ else
   # create symlinks in a configuration-independent manner
   DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+  # submodules
+  git submodule init
+  git submodule update
+
   # binaries
   symlink $DIR/bin ~/.bin
 
