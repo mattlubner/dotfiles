@@ -232,7 +232,8 @@ shopt -s cdable_vars # set the bash option so that no '$' is required when using
 
 
 # Editors ----------------------------------------------------------
-export EDITOR='mate -w'	 # OS-X SPECIFIC - TextMate, w is to wait for TextMate window to close
+#export EDITOR='mate -w'	 # OS-X SPECIFIC - TextMate, w is to wait for TextMate window to close
+export EDITOR='subl -w'	 # OS-X SPECIFIC - TextMate, w is to wait for TextMate window to close
 #export EDITOR='gedit'	#Linux/gnome
 #export EDITOR='vim'	#Command line
 export GIT_EDITOR='vim'
