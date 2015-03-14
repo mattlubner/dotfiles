@@ -15,7 +15,7 @@ fi
 # Colors ----------------------------------------------------------
 export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
-export CLICOLOR=1 
+export CLICOLOR=1
 
 if [ "$OS" = "linux" ] ; then
 	alias ls='ls --color=auto' # For linux, etc
@@ -67,7 +67,7 @@ export HISTCONTROL=ignoredups
 export HISTFILESIZE=3000
 export HISTIGNORE="ls:cd:[bf]g:exit:..:...:ll:lla"
 alias h=history
-hf(){ 
+hf(){
 	grep "$@" ~/.bash_history
 }
 
@@ -95,31 +95,31 @@ if [ $IS_INTERACTIVE = 'true' ] ; then # Interactive shell only
 	# Completion -------------------------------------------------------
 
 	GIT_PS1=""
-	# Turn on advanced bash completion if the file exists 
-	# Get it here: http://www.caliban.org/bash/index.shtml#completion) or 
+	# Turn on advanced bash completion if the file exists
+	# Get it here: http://www.caliban.org/bash/index.shtml#completion) or
 	# on OSX: sudo port install bash-completion
 	if [ -f /etc/bash_completion ]; then
 		. /etc/bash_completion
 		# Add completion to source and .
-		# complete -F _command source 
+		# complete -F _command source
 		# complete -F _command .
 		GIT_PS1="__git_ps1"
 	elif [ -f /etc/profile.d/bash_completion.sh ]; then
 		. /etc/profile.d/bash_completion.sh
 		# Add completion to source and .
-		# complete -F _command source 
+		# complete -F _command source
 		# complete -F _command .
 		GIT_PS1="__git_ps1"
 	elif [ -f /opt/local/etc/bash_completion ]; then
 		. /opt/local/etc/bash_completion
 		# Add completion to source and .
-		# complete -F _command source 
+		# complete -F _command source
 		# complete -F _command .
 		GIT_PS1="__git_ps1"
 	elif hash brew 2>/dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
 		. $(brew --prefix)/etc/bash_completion
 		# Add completion to source and .
-		# complete -F _command source 
+		# complete -F _command source
 		# complete -F _command .
 		GIT_PS1="__git_ps1"
 	fi
@@ -128,13 +128,13 @@ if [ $IS_INTERACTIVE = 'true' ] ; then # Interactive shell only
 		if [ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh ]; then
 			. /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh
 			# Add completion to source and .
-			# complete -F _command source 
+			# complete -F _command source
 			# complete -F _command .
 			GIT_PS1="__git_ps1"
 		elif [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
 			. /usr/share/git-core/contrib/completion/git-prompt.sh
 			# Add completion to source and .
-			# complete -F _command source 
+			# complete -F _command source
 			# complete -F _command .
 			GIT_PS1="__git_ps1"
 		else
@@ -151,7 +151,7 @@ if [ $IS_INTERACTIVE = 'true' ] ; then # Interactive shell only
 
 	prompt_func() {
 		previous_return_value=$?;
-		
+
 		if [ "${USER}" == "root" ]; then
 			prompt_username="\[${COLOR_LIGHT_RED}\]\u"
 			prompt_char="#"
@@ -188,8 +188,8 @@ if [ $IS_INTERACTIVE = 'true' ] ; then # Interactive shell only
 
 	# export PS1="\[${COLOR_GREEN}\]\w\[${COLOR_NC}\] > "	 # Primary prompt with only a path
 	# export PS1="\[${COLOR_RED}\]\w > \[${COLOR_NC}\]"	 # Primary prompt with only a path, for root, need condition to use this for root
-	# export PS1="\[${COLOR_GRAY}\]\u@\h \[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]"	# Primary prompt with user, host, and path 
-	
+	# export PS1="\[${COLOR_GRAY}\]\u@\h \[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]"	# Primary prompt with user, host, and path
+
 	# This runs before the prompt and sets the title of the xterm* window.	If you set the title in the prompt
 	# weird wrapping errors occur on some systems, so this method is superior
 	#export PROMPT_COMMAND='echo -ne "\033]0;${PWD##*/} ${USER}@${HOSTNAME%%.*}"; echo -ne "\007"'	# user@host path
@@ -200,7 +200,7 @@ if [ $IS_INTERACTIVE = 'true' ] ; then # Interactive shell only
 
 	function xtitle {	 # change the title of your xterm* window
 		unset PROMPT_COMMAND
-		echo -ne "\033]0;$1\007" 
+		echo -ne "\033]0;$1\007"
 	}
 
 fi
@@ -210,7 +210,7 @@ fi
 # Navigation -------------------------------------------------------
 alias ..='cd ..'
 alias ...='cd .. ; cd ..'
-cl() { cd $1; ls -la; } 
+cl() { cd $1; ls -la; }
 
 source ~/.bin/bashmarks.sh
 # I got the following from, and mod'd it: http://www.macosxhints.com/article.php?story=20020716005123797
@@ -224,18 +224,25 @@ fi
 
 alias show='cat ~/.dirs'
 save (){
-	command sed "/!$/d" ~/.dirs > ~/.dirs1; \mv ~/.dirs1 ~/.dirs; echo "$@"=\"`pwd`\" >> ~/.dirs; source ~/.dirs ; 
+	command sed "/!$/d" ~/.dirs > ~/.dirs1; \mv ~/.dirs1 ~/.dirs; echo "$@"=\"`pwd`\" >> ~/.dirs; source ~/.dirs ;
 }	 #"
-source ~/.dirs	# Initialization for the above 'save' facility: source the .sdirs file 
+source ~/.dirs	# Initialization for the above 'save' facility: source the .sdirs file
 shopt -s cdable_vars # set the bash option so that no '$' is required when using the above facility
 
 
 
 # Editors ----------------------------------------------------------
-#export EDITOR='mate -w'	 # OS-X SPECIFIC - TextMate, w is to wait for TextMate window to close
-export EDITOR='subl -w'	 # OS-X SPECIFIC - TextMate, w is to wait for TextMate window to close
-#export EDITOR='gedit'	#Linux/gnome
-#export EDITOR='vim'	#Command line
+if [ "$OS" = "darwin" ] ; then
+	# OS-X SPECIFIC - TextMate, w is to wait for window to close
+	#export EDITOR='mate -w'
+	# OS-X SPECIFIC - Sublime Text, w is to wait for window to close
+	export EDITOR='subl -wn'
+else
+	# Command line
+	export EDITOR='vim'
+	# Linux/gnome
+	#export EDITOR='gedit'
+fi
 export GIT_EDITOR='vim'
 export SVN_EDITOR='vim'
 #alias gvim='/Applications/MacVim.app/Contents/MacOS/vim -g'
@@ -248,12 +255,14 @@ else
 	alias v=vim
 fi
 
+alias edit='$EDITOR'
+
 
 
 # Security ---------------------------------------------------------
 
 # Folder shared by a group
-# chmod g+s directory 
+# chmod g+s directory
 #find /foo -type f -print | xargs chmod g+rw,o-rwx,u+rw
 #find /foo -type d -print | xargs chmod g+rwxs,o-rwx,u+rwx
 
@@ -269,14 +278,14 @@ findportuser() {
 
 findhosts(){
 	nmap -sP -n -oG - "$1"/24 | grep "Up" | awk '{print $2}' -
-	echo "To scan those do: nmap $1-254" 
-	echo "To scan and OS detect those do: sudo nmap -O $1-254" 
+	echo "To scan those do: nmap $1-254"
+	echo "To scan and OS detect those do: sudo nmap -O $1-254"
 	echo "To intensly scan one do: sudo nmap -sV -vv -PN $1"
 }
 
 monitor_traffic(){
 	# install ngrep with sudo port install ngrep
-	sudo ngrep -W byline -qld en1 "$1" 
+	sudo ngrep -W byline -qld en1 "$1"
 }
 
 
@@ -289,7 +298,7 @@ alias lla='ls -lah'
 # Search
 # Use ack for grepping and find if ack is available
 # sudo port install p5-app-ack
-if type -P ack &>/dev/null ; then 
+if type -P ack &>/dev/null ; then
 	g(){
 		ack "$*" --all-types --color-match=green --color-filename=blue --smart-case
 	}
@@ -356,7 +365,7 @@ killhard() {
 # Ruby ----------------------------------------------------
 
 # RVM
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 # Fixes problems with sending email in ruby
 export RUBYOPT="-r openssl"
@@ -370,11 +379,11 @@ alias spin_kicker="kicker -r rails -b 'spin push'"
 # Bring in the other files ----------------------------------------------------
 if [ $IS_INTERACTIVE = 'true' ] ; then
 	source ~/.bashrc_help
-	
+
 	if [ -e ~/.bash_profile_local ]; then
 		source ~/.bash_profile_local
 	fi
-	
+
 	source ~/.bin/mq/mq.sh # MySQL tools
 	source ~/.bin/rr/rr.sh # Rails tools
 	source ~/.bin/gt/gt.sh # Git tools
@@ -387,7 +396,7 @@ fi
 
 
 
-# Test ------------------------------------------------------------------------ 
+# Test ------------------------------------------------------------------------
 
 #if [ "$OS" = "linux" ] ; then
 #elif
