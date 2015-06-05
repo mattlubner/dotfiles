@@ -199,7 +199,7 @@ if [ $IS_INTERACTIVE = 'true' ] ; then # Interactive shell only
 	export PS4='+'		 # Prompt 4
 
 	function xtitle {	 # change the title of your xterm* window
-		unset PROMPT_COMMAND
+		# unset PROMPT_COMMAND
 		echo -ne "\033]0;$1\007"
 	}
 
