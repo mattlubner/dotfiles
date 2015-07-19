@@ -149,42 +149,47 @@ if [ $IS_INTERACTIVE = 'true' ] ; then # Interactive shell only
 		#git status 2> /dev/null | grep -c : | awk '{if ($1 > 0) print "⚡"}'
 	#}
 
-	prompt_func() {
-		previous_return_value=$?;
+	# prompt_func() {
+	# 	previous_return_value=$?;
 
-		if [ "${USER}" == "root" ]; then
-			prompt_username="\[${COLOR_LIGHT_RED}\]\u"
-			prompt_char="#"
-		else
-			prompt_username="\[${COLOR_LIGHT_CYAN}\]\u"
-			prompt_char="\$"
-		fi
+	# 	if [ "${USER}" == "root" ]; then
+	# 		prompt_username="\[${COLOR_LIGHT_RED}\]\u"
+	# 		prompt_char="#"
+	# 	else
+	# 		prompt_username="\[${COLOR_LIGHT_CYAN}\]\u"
+	# 		prompt_char="\$"
+	# 	fi
 
-		if [ $IS_REMOTE = 'true' ] ; then
-			prompt="\[${COLOR_PURPLE}\]\h\[${COLOR_NC}\]:\[${COLOR_LIGHT_PURPLE}\]\W\[${COLOR_GRAY}\]$($GIT_PS1) ${prompt_username}\[${COLOR_NC}\]"
-		else
-			prompt="\[${COLOR_CYAN}\]\h\[${COLOR_NC}\]:\[${COLOR_LIGHT_CYAN}\]\W\[${COLOR_GRAY}\]$($GIT_PS1) ${prompt_username}\[${COLOR_NC}\]"
-		fi
+	# 	if [ $IS_REMOTE = 'true' ] ; then
+	# 		prompt="\[${COLOR_PURPLE}\]\h\[${COLOR_NC}\]:\[${COLOR_LIGHT_PURPLE}\]\W\[${COLOR_GRAY}\]$($GIT_PS1) ${prompt_username}\[${COLOR_NC}\]"
+	# 	else
+	# 		prompt="\[${COLOR_CYAN}\]\h\[${COLOR_NC}\]:\[${COLOR_LIGHT_CYAN}\]\W\[${COLOR_GRAY}\]$($GIT_PS1) ${prompt_username}\[${COLOR_NC}\]"
+	# 	fi
 
-		if test $previous_return_value -eq 0
-		then
-			PS1="${prompt}${prompt_char} "
-		else
-			PS1="${prompt}\[${COLOR_RED}\]${prompt_char} \[${COLOR_NC}\]"
-		fi
+	# 	if test $previous_return_value -eq 0
+	# 	then
+	# 		PS1="${prompt}${prompt_char} "
+	# 	else
+	# 		PS1="${prompt}\[${COLOR_RED}\]${prompt_char} \[${COLOR_NC}\]"
+	# 	fi
 
-		if [ "$TERM_PROGRAM" == "Apple_Terminal" ] && [ -z "$INSIDE_EMACS" ]; then
-			# Identify the directory using a "file:" scheme URL,
-			# including the host name to disambiguate local vs.
-			# remote connections. Percent-escape spaces.
-			local SEARCH=' '
-			local REPLACE='%20'
-			local PWD_URL="file://$HOSTNAME${PWD//$SEARCH/$REPLACE}"
-			printf '\e]7;%s\a' "$PWD_URL"
-			update_terminal_cwd
-		fi
+	# 	if [ "$TERM_PROGRAM" == "Apple_Terminal" ] && [ -z "$INSIDE_EMACS" ]; then
+	# 		# Identify the directory using a "file:" scheme URL,
+	# 		# including the host name to disambiguate local vs.
+	# 		# remote connections. Percent-escape spaces.
+	# 		local SEARCH=' '
+	# 		local REPLACE='%20'
+	# 		local PWD_URL="file://$HOSTNAME${PWD//$SEARCH/$REPLACE}"
+	# 		printf '\e]7;%s\a' "$PWD_URL"
+	# 		update_terminal_cwd
+	# 	fi
+	# }
+	# PROMPT_COMMAND=prompt_func
+
+	function _update_ps1() {
+		export PS1="$(~/powerline-shell.py $? 2> /dev/null)"
 	}
-	PROMPT_COMMAND=prompt_func
+	export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 
 	# export PS1="\[${COLOR_GREEN}\]\w\[${COLOR_NC}\] > "	 # Primary prompt with only a path
 	# export PS1="\[${COLOR_RED}\]\w > \[${COLOR_NC}\]"	 # Primary prompt with only a path, for root, need condition to use this for root

@@ -1,0 +1,15 @@
+[submodule "etc/vim/bundle/nerdtree"]
+	path = etc/vim/bundle/nerdtree
+	url = git://github.com/scrooloose/nerdtree.git
+[submodule "etc/vim/bundle/vim-nerdtree-tabs"]
+	path = etc/vim/bundle/vim-nerdtree-tabs
+	url = git://github.com/jistr/vim-nerdtree-tabs.git
+[submodule "etc/vim/bundle/Vundle.vim"]
+	path = etc/vim/bundle/Vundle.vim
+	url = git://github.com/gmarik/Vundle.vim.git
+[submodule "etc/powerline/shell"]
+	path = etc/powerline/shell
+	url = https://github.com/milkbikis/powerline-shell.git
+[submodule "etc/powerline/fonts"]
+	path = etc/powerline/fonts
+	url = https://github.com/powerline/fonts.git
