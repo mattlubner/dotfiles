@@ -9,7 +9,7 @@
 	url = git://github.com/gmarik/Vundle.vim.git
 [submodule "etc/powerline/shell"]
 	path = etc/powerline/shell
-	url = https://github.com/milkbikis/powerline-shell.git
+	url = git@github.com:mattlubner/powerline-shell.git
 [submodule "etc/powerline/fonts"]
 	path = etc/powerline/fonts
 	url = https://github.com/powerline/fonts.git
