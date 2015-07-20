@@ -19,3 +19,6 @@
 [submodule "etc/powerline/fonts"]
 	path = etc/powerline/fonts
 	url = https://github.com/powerline/fonts.git
+[submodule "etc/powerline/shell"]
+	path = etc/powerline/shell
+	url = git@github.com:mattlubner/powerline-shell.git

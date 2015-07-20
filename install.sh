@@ -80,6 +80,8 @@ else
   symlink $DIR/etc/irbrc ~/.irbrc
   # symlink $DIR/etc/ssh_config ~/.ssh/config
 
+  symlinks $DIR/etc/powerline/shell/powerline-shell.py ~/powerline-shell.py
+
   echo "Your home directory's symbolic links now point to the files in \"$DIR/etc\""
   echo "You should re-run this script if \"$DIR\" is ever moved"
 
