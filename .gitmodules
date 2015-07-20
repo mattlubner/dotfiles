@@ -16,9 +16,6 @@
 [submodule "etc/vim/bundle/Vundle.vim"]
 	path = etc/vim/bundle/Vundle.vim
 	url = git://github.com/gmarik/Vundle.vim.git
-[submodule "etc/powerline/shell"]
-	path = etc/powerline/shell
-	url = git@github.com:mattlubner/powerline-shell.git
 [submodule "etc/powerline/fonts"]
 	path = etc/powerline/fonts
 	url = https://github.com/powerline/fonts.git
