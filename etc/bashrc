@@ -351,7 +351,6 @@ alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' 
 alias untar="tar xvzf"
 alias cp_folder="cp -Rpv" #copies folder and all sub files and folders, preserving security and dates
 alias mirror_website="wget -m -x -p --convert-links --no-host-directories --no-cache -erobots=off"
-# alias upchuck="ulimit -n 2048"
 alias clear="clear && printf '\e[3J'"
 
 killhard() {
