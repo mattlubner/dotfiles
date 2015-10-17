@@ -302,6 +302,13 @@ alias ll='ls -hl'
 alias la='ls -a'
 alias lla='ls -lah'
 
+# Docker Machine
+alias dm="docker-machine"
+alias d="docker"
+alias dps="docker ps"
+alias dpsa="docker ps -a"
+alias drmrf="docker ps -a -q | xargs docker stop; docker ps -a -q | xargs docker rm"
+
 # Git
 alias gs="git status"
 alias gdff="git diff"
