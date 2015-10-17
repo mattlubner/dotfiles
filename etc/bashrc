@@ -302,9 +302,6 @@ alias ll='ls -hl'
 alias la='ls -a'
 alias lla='ls -lah'
 
-# For Memcached
-export EVENT_NOKQUEUE=1
-
 # Misc
 alias reloadbash='source ~/.bash_profile'
 alias ducks='du -cksh * | sort -rn|head -11' # Lists folders and files sizes in the current folder
