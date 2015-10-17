@@ -296,6 +296,8 @@ monitor_traffic(){
 
 
 # Other aliases ----------------------------------------------------
+
+# Directory Listing
 alias ll='ls -hl'
 alias la='ls -a'
 alias lla='ls -lah'
@@ -331,36 +333,25 @@ export EVENT_NOKQUEUE=1
 
 # Misc
 alias reloadbash='source ~/.bash_profile'
-
 alias ducks='du -cksh * | sort -rn|head -11' # Lists folders and files sizes in the current folder
 alias m='more'
 alias top='top -o cpu' # os x
-
 alias df='df -h' # Show disk usage
 
 if [ "$OS" = "linux" ] ; then
 	alias processes_all='ps -AFH'
-else
-	alias processes_all='ps -Afjv'
-fi
-
-if [ "$OS" = "linux" ] ; then
 	alias systail='tail -f /var/log/syslog'
 else
+	alias processes_all='ps -Afjv'
 	alias systail='tail -f /var/log/system.log'
 fi
 
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
-
 alias untar="tar xvzf"
-
 alias cp_folder="cp -Rpv" #copies folder and all sub files and folders, preserving security and dates
-
 alias mirror_website="wget -m -x -p --convert-links --no-host-directories --no-cache -erobots=off"
-
 # alias upchuck="ulimit -n 2048"
-
 alias clear="clear && printf '\e[3J'"
 
 killhard() {
