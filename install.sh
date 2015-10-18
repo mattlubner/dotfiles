@@ -81,11 +81,14 @@ else
   # symlink $DIR/etc/ssh_config ~/.ssh/config
 
   # powerline shell prompt
-  symlinks $DIR/etc/powerline/shell/powerline-shell.py ~/.powerline-shell.py
+  symlink $DIR/etc/powerline/shell/powerline-shell.py ~/.powerline-shell.py
 
   # increase mac system open file and proc limits
   if [ -e /Library/LaunchDaemons ]; then
-    sudo ln -Fs $DIR/etc/LaunchDaemons/*.plist /Library/LaunchDaemons 
+    sudo cp $DIR/etc/LaunchDaemons/limit.maxfiles.plist /Library/LaunchDaemons/
+	sudo launchctl load /Library/LaunchDaemons/limit.maxfiles.plist
+    sudo cp $DIR/etc/LaunchDaemons/limit.maxproc.plist /Library/LaunchDaemons/
+	sudo launchctl load /Library/LaunchDaemons/limit.maxproc.plist
   fi
 
   echo "Your home directory's symbolic links now point to the files in \"$DIR/etc\""
