@@ -85,6 +85,7 @@ else
 
   # increase mac system open file and proc limits
   if [ -e /Library/LaunchDaemons ]; then
+	echo "About to install LaunchDaemons..."
     sudo cp $DIR/etc/LaunchDaemons/limit.maxfiles.plist /Library/LaunchDaemons/
 	sudo launchctl load /Library/LaunchDaemons/limit.maxfiles.plist
     sudo cp $DIR/etc/LaunchDaemons/limit.maxproc.plist /Library/LaunchDaemons/
