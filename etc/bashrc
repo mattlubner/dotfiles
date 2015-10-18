@@ -304,6 +304,7 @@ alias lla='ls -lah'
 
 # Docker Machine
 alias dm="docker-machine"
+alias fig="docker-compose"
 alias d="docker"
 alias dps="docker ps"
 alias dpsa="docker ps -a"
