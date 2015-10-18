@@ -80,7 +80,13 @@ else
   symlink $DIR/etc/irbrc ~/.irbrc
   # symlink $DIR/etc/ssh_config ~/.ssh/config
 
+  # powerline shell prompt
   symlinks $DIR/etc/powerline/shell/powerline-shell.py ~/.powerline-shell.py
+
+  # increase mac system open file and proc limits
+  if [ -e /Library/LaunchDaemons ]; then
+    sudo ln -Fs $DIR/etc/LaunchDaemons/*.plist /Library/LaunchDaemons 
+  fi
 
   echo "Your home directory's symbolic links now point to the files in \"$DIR/etc\""
   echo "You should re-run this script if \"$DIR\" is ever moved"
