@@ -50,11 +50,11 @@ else
       GIT_PATH="${GIT_PATH/bin\/git/}"
       GIT_COMPLETION_FILE="$GIT_PATH""share/git-core/git-completion.bash"
     fi
-		if [ ! -f $GIT_COMPLETION_FILE ] && [ "$OS" = "darwin" ]; then
-			# do something
-			GIT_COMPLETION_FILE="`mdfind -name 'git-completion.bash'`"
-			GIT_COMPLETION_FILE="${GIT_COMPLETION_FILE##*$'\n'}"
-		fi
+    if [ ! -f $GIT_COMPLETION_FILE ] && [ "$OS" = "darwin" ]; then
+      # do something
+      GIT_COMPLETION_FILE="`mdfind -name 'git-completion.bash'`"
+      GIT_COMPLETION_FILE="${GIT_COMPLETION_FILE##*$'\n'}"
+    fi
     # symlink git-completion.bash into the bash_completion.d directory
     if [-n $BASH_COMPLETION_DIR ] && [ -d $BASH_COMPLETION_DIR ] && [ -w $BASH_COMPLETION_DIR ] && [ -f $GIT_COMPLETION_FILE ]; then
       symlink $GIT_COMPLETION_FILE $BASH_COMPLETION_DIR/git-completion.bash
@@ -85,11 +85,11 @@ else
 
   # increase mac system open file and proc limits
   if [ -e /Library/LaunchDaemons ]; then
-	echo "About to install LaunchDaemons..."
+  echo "About to install LaunchDaemons..."
     sudo cp $DIR/etc/LaunchDaemons/limit.maxfiles.plist /Library/LaunchDaemons/
-	sudo launchctl load /Library/LaunchDaemons/limit.maxfiles.plist
+  sudo launchctl load /Library/LaunchDaemons/limit.maxfiles.plist
     sudo cp $DIR/etc/LaunchDaemons/limit.maxproc.plist /Library/LaunchDaemons/
-	sudo launchctl load /Library/LaunchDaemons/limit.maxproc.plist
+  sudo launchctl load /Library/LaunchDaemons/limit.maxproc.plist
   fi
 
   echo "Your home directory's symbolic links now point to the files in \"$DIR/etc\""
