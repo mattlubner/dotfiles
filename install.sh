@@ -43,29 +43,43 @@ else
   symlink $DIR/etc/gitignore ~/.gitignore
   symlink $DIR/etc/gitattributes ~/.gitattributes
 
-  # git bash completion
-  if [ -n "$BASH_COMPLETION_DIR" ] && [ ! -f $BASH_COMPLETION_DIR/git-completion.bash ]; then
-    GIT_PATH=`which git`
-    if [ -n "$GIT_PATH" ]; then
-      GIT_PATH="${GIT_PATH/bin\/git/}"
-      GIT_COMPLETION_FILE="$GIT_PATH""share/git-core/git-completion.bash"
+  # git-completion (register that module with your installation of bash_completion)
+  # ${BASH_COMPLETION_DIR} is bash_completion's configuration directory
+  if [ -d ${BASH_COMPLETION_DIR} ] && [ ! -f ${BASH_COMPLETION_DIR}/git-completion.bash ]; then
+    # you have bash_completion installed
+    # -AND-
+    # the git-completion.bash module is not registered with bash_completion
+
+    # 1. look for your git installation's "git-completion.bash" file...
+    # 1a. vomit-inducing way that only works with homebrew-installed git...
+    # GIT_COMPLETION_FILE="$(which git)"
+    # GIT_COMPLETION_FILE="${GIT_COMPLETION_FILE/bin\/git/}share/git-core/git-completion.bash"
+
+    # 1b. find-based method...
+    GIT_COMPLETION_FILE_LIST=""
+    if [ "`uname -s | sed -e 's/  */-/g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`" = "darwin" ]; then
+      # this is a macintosh system
+      # compile a list of all possible git-completion.bash files (could be multiple git installations)
+      GIT_COMPLETION_FILE_LIST="$(mdfind -name 'git-completion.bash')"
     fi
-    if [ ! -f $GIT_COMPLETION_FILE ] && [ "$OS" = "darwin" ]; then
-      # do something
-      GIT_COMPLETION_FILE="`mdfind -name 'git-completion.bash'`"
-      GIT_COMPLETION_FILE="${GIT_COMPLETION_FILE##*$'\n'}"
+    if [ "`uname -s | sed -e 's/  */-/g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`" = "linux" ]; then
+      # this is a linux system
+      # compile a list of all possible git-completion.bash files (could be multiple git installations)
+      GIT_COMPLETION_FILE_LIST="$(find /usr /bin /etc /opt -type f -name '*git-completion.bash' 2>/dev/null)"
     fi
-    # symlink git-completion.bash into the bash_completion.d directory
-    if [-n "$GIT_COMPLETION_FILE" ] && [-n "$BASH_COMPLETION_DIR" ] && [ -d "$BASH_COMPLETION_DIR" ] && [ -w "$BASH_COMPLETION_DIR" ] && [ -f "$GIT_COMPLETION_FILE" ]; then
-      symlink $GIT_COMPLETION_FILE $BASH_COMPLETION_DIR/git-completion.bash
+    GIT_COMPLETION_FILE="$(echo ${GIT_COMPLETION_FILE_LIST} | grep $(git --version | awk '{print $3}') | grep 'bash_completion.d' | head -n1)"
+
+    # did we find GIT_COMPLETION_FILE ?
+    if [ -f ${GIT_COMPLETION_FILE} ]; then
+      # 2. create a symbolic link inside your bash_completion.d dir for your git
+      #    installation's "git-completion.bash" file
+      symlink ${GIT_COMPLETION_FILE} ${BASH_COMPLETION_DIR}/git-completion.bash
     else
-      echo "Automatic symlinking of \"git-completion.bash\" into your \"bash_completion.d\" directory failed"
-      if [ -d $BASH_COMPLETION_DIR ] && [ -n "$GIT_COMPLETION_FILE" ]; then
-        echo "Please run this command (as sudo) to create the necessary symlink:"
-        echo "  sudo ln -s $GIT_COMPLETION_FILE $BASH_COMPLETION_DIR"
-      else
-        echo "Please ensure that both \"bash_completion\" & \"git\" are installed & then manually create this symlink to avoid error messages"
-      fi
+      # 3. vomit on the user (try to avoid this step...)
+      echo "Failed to inject git-completion into your system's bash_completion.d directory!"
+      echo "You may wish to manually setup git-completion!"
+      echo "BASH_COMPLETION_DIR: '${BASH_COMPLETION_DIR}'"
+      echo "GIT_COMPLETION_FILE: '${GIT_COMPLETION_FILE}'"
     fi
   fi
 
