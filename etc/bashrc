@@ -313,6 +313,7 @@ alias drmrf="docker ps -a -q | xargs docker stop; docker ps -a -q | xargs docker
 # Git
 alias gs="git status"
 alias gdff="git diff"
+alias gitaliases='source ~/Dotfiles/etc/gitaliases'
 
 # Misc
 alias reloadbash='source ~/.bash_profile'
