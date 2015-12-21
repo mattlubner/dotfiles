@@ -17,7 +17,7 @@ export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 export CLICOLOR=1
 
-if [ "$OS" = "linux" ] ; then
+if [ "$OS" = 'linux' ]; then
   alias ls='ls --color=auto' # For linux, etc
   # ls colors, see: http://www.linux-sxs.org/housekeeping/lscolors.html
 #  export LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rb=90'  #LS_COLORS is not supported by the default ls command in OS-X
@@ -303,16 +303,16 @@ alias la='ls -a'
 alias lla='ls -lah'
 
 # Docker Machine
-alias dm="docker-machine"
-alias fig="docker-compose"
-alias d="docker"
-alias dps="docker ps"
-alias dpsa="docker ps -a"
-alias drmrf="docker ps -a -q | xargs docker stop; docker ps -a -q | xargs docker rm"
+alias dm='docker-machine'
+alias fig='docker-compose'
+alias d='docker'
+alias dps='docker ps'
+alias dpsa='docker ps -a'
+alias drmrf='docker ps -a -q | xargs docker stop; docker ps -a -q | xargs docker rm'
 
 # Git
-alias gs="git status"
-alias gdff="git diff"
+alias gs='git status'
+alias gdff='git diff'
 alias gitaliases='source ~/Dotfiles/etc/gitaliases'
 
 # Misc
@@ -322,13 +322,13 @@ alias m='more'
 alias top='top -o cpu' # os x
 alias df='df -h' # Show disk usage
 alias untar="tar xvzf"
-alias cp_folder="cp -Rpv" #copies folder and all sub files and folders, preserving security and dates
-alias mirror_website="wget -m -x -p --convert-links --no-host-directories --no-cache -erobots=off"
+alias cp_folder='cp -Rpv' #copies folder and all sub files and folders, preserving security and dates
+alias mirror_website='wget -m -x -p --convert-links --no-host-directories --no-cache -erobots=off'
 alias clear="clear && printf '\e[3J'"
 # Shows most used commands, cool script I got this from: http://lifehacker.com/software/how-to/turbocharge-your-terminal-274317.php
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
 
-if [ "$OS" = "linux" ] ; then
+if [ "$OS" = 'linux' ]; then
   alias processes_all='ps -AFH'
   alias systail='tail -f /var/log/syslog'
 else
