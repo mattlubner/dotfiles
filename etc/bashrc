@@ -346,7 +346,7 @@ if [ "$OS" = 'linux' ]; then
 elif [ "$OS" = 'darwin' ]; then
   alias processes_all='ps -Afjv'
   alias systail='tail -f /var/log/system.log'
-  alias pwdx='pwd | pbcopy; echo "\"$(pwd)\" copied to pasteboard!"'
+  alias pwdx="echo -ne $(pwd) | pbcopy; echo \"'$(pbpaste)' copied to pasteboard!\""
   alias pwdv='echo "changing to \"$(pbpaste)\"..."; cd $(pbpaste)'
   # else unrecognized os! :P
 fi
