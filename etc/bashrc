@@ -1,13 +1,13 @@
 if [[ $- == *i* ]] ; then
-	export IS_INTERACTIVE=true
+  export IS_INTERACTIVE=true
 else
-	export IS_INTERACTIVE=false
+  export IS_INTERACTIVE=false
 fi
 
 if [[ -z $SSH_CONNECTION ]] && [[ ($HOSTNAME =~ "\.local(?:host)?$") || (! $HOSTNAME =~ "\.") ]]; then
-	export IS_REMOTE=false
+  export IS_REMOTE=false
 else
-	export IS_REMOTE=true
+  export IS_REMOTE=true
 fi
 
 
@@ -18,24 +18,24 @@ export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 export CLICOLOR=1
 
 if [ "$OS" = "linux" ] ; then
-	alias ls='ls --color=auto' # For linux, etc
-	# ls colors, see: http://www.linux-sxs.org/housekeeping/lscolors.html
-#	 export LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rb=90'	#LS_COLORS is not supported by the default ls command in OS-X
-	export LS_COLORS='di=1;36:fi=0:ln=35:pi=5;33:so=5;32:bd=5;34;46:cd=5;34;43:or=5;31;40:mi=31;40:ex=31:*.rb=90'	 #LS_COLORS is not supported by the default ls command in OS-X
+  alias ls='ls --color=auto' # For linux, etc
+  # ls colors, see: http://www.linux-sxs.org/housekeeping/lscolors.html
+#  export LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rb=90'  #LS_COLORS is not supported by the default ls command in OS-X
+  export LS_COLORS='di=1;36:fi=0:ln=35:pi=5;33:so=5;32:bd=5;34;46:cd=5;34;43:or=5;31;40:mi=31;40:ex=31:*.rb=90'  #LS_COLORS is not supported by the default ls command in OS-X
 else
-	alias ls='ls -G'	# OS-X SPECIFIC - the -G command in OS-X is for colors, in Linux it's no groups
-	export LSCOLORS='Gxfxcxdxbxegedabagacad'
-#	 Gx directory (bold cyan)
-#		 fx symlink (magenta)
-#			 cx socket (green)
-#				 dx pipe (brown)
-#					 bx exec (red)
-#						 eg block special (blue on cyan)
-#							 ed char special (blue on brown)
-#								 ab exec w/ setuid (black on red)
-#									 ag exec w/ setgid (black on cyan)
-#										 ac dir writable to others w/ sticky (black on green)
-#											 ad dir writable to others w/o sticky (black on brown)
+  alias ls='ls -G'  # OS-X SPECIFIC - the -G command in OS-X is for colors, in Linux it's no groups
+  export LSCOLORS='Gxfxcxdxbxegedabagacad'
+#  Gx directory (bold cyan)
+#    fx symlink (magenta)
+#      cx socket (green)
+#        dx pipe (brown)
+#          bx exec (red)
+#            eg block special (blue on cyan)
+#              ed char special (blue on brown)
+#                ab exec w/ setuid (black on red)
+#                  ag exec w/ setgid (black on cyan)
+#                    ac dir writable to others w/ sticky (black on green)
+#                      ad dir writable to others w/o sticky (black on brown)
 fi
 
 # Setup some colors to use later in interactive shell or scripts
@@ -56,8 +56,8 @@ export COLOR_BROWN='\033[0;33m'
 export COLOR_YELLOW='\033[1;33m'
 export COLOR_GRAY='\033[1;30m'
 export COLOR_LIGHT_GRAY='\033[0;37m'
-# alias colorslist="set | egrep 'COLOR_\w*'"	# lists all the colors
-alias colorslist="set | egrep 'COLOR_[a-zA-Z0-9_]+=\w*'"	# lists all the colors
+# alias colorslist="set | egrep 'COLOR_\w*'"  # lists all the colors
+alias colorslist="set | egrep 'COLOR_[a-zA-Z0-9_]+=\w*'"  # lists all the colors
 
 
 
@@ -68,145 +68,145 @@ export HISTFILESIZE=3000
 export HISTIGNORE="ls:cd:[bf]g:exit:..:...:ll:lla"
 alias h=history
 hf(){
-	grep "$@" ~/.bash_history
+  grep "$@" ~/.bash_history
 }
 
 
 
 if [ $IS_INTERACTIVE = 'true' ] ; then # Interactive shell only
 
-	# Input stuff -------------------------------------------------------
-	bind "set completion-ignore-case on" # note: bind used instead of sticking these in .inputrc
-	bind "set show-all-if-ambiguous On" # show list automatically, without double tab
-	bind "set bell-style none" # no bell
+  # Input stuff -------------------------------------------------------
+  bind "set completion-ignore-case on" # note: bind used instead of sticking these in .inputrc
+  bind "set show-all-if-ambiguous On" # show list automatically, without double tab
+  bind "set bell-style none" # no bell
 
-	# Use vi command mode
-	#bind "set editing-mode vi"
-	#set -o vi
-	#bind -m vi-command -r 'v'
+  # Use vi command mode
+  #bind "set editing-mode vi"
+  #set -o vi
+  #bind -m vi-command -r 'v'
 
-	bind '"\e[A":history-search-backward'
-	bind '"\e[B":history-search-forward'
+  bind '"\e[A":history-search-backward'
+  bind '"\e[B":history-search-forward'
 
-	shopt -s checkwinsize # After each command, checks the windows size and changes lines and columns
-
-
-
-	# Completion -------------------------------------------------------
-
-	GIT_PS1=""
-	# Turn on advanced bash completion if the file exists
-	# Get it here: http://www.caliban.org/bash/index.shtml#completion) or
-	# on OSX: sudo port install bash-completion
-	if [ -f /etc/bash_completion ]; then
-		. /etc/bash_completion
-		# Add completion to source and .
-		# complete -F _command source
-		# complete -F _command .
-		GIT_PS1="__git_ps1"
-	elif [ -f /etc/profile.d/bash_completion.sh ]; then
-		. /etc/profile.d/bash_completion.sh
-		# Add completion to source and .
-		# complete -F _command source
-		# complete -F _command .
-		GIT_PS1="__git_ps1"
-	elif [ -f /opt/local/etc/bash_completion ]; then
-		. /opt/local/etc/bash_completion
-		# Add completion to source and .
-		# complete -F _command source
-		# complete -F _command .
-		GIT_PS1="__git_ps1"
-	elif hash brew 2>/dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
-		. $(brew --prefix)/etc/bash_completion
-		# Add completion to source and .
-		# complete -F _command source
-		# complete -F _command .
-		GIT_PS1="__git_ps1"
-	fi
-	if ! hash __git_ps1 2>/dev/null; then
-		# Last resort!
-		if [ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh ]; then
-			. /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh
-			# Add completion to source and .
-			# complete -F _command source
-			# complete -F _command .
-			GIT_PS1="__git_ps1"
-		elif [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
-			. /usr/share/git-core/contrib/completion/git-prompt.sh
-			# Add completion to source and .
-			# complete -F _command source
-			# complete -F _command .
-			GIT_PS1="__git_ps1"
-		else
-			GIT_PS1=""
-		fi
-	fi
+  shopt -s checkwinsize # After each command, checks the windows size and changes lines and columns
 
 
 
-	# Prompts ----------------------------------------------------------
-	#git_dirty_flag() {
-		#git status 2> /dev/null | grep -c : | awk '{if ($1 > 0) print "⚡"}'
-	#}
+  # Completion -------------------------------------------------------
 
-	# prompt_func() {
-	# 	previous_return_value=$?;
+  GIT_PS1=""
+  # Turn on advanced bash completion if the file exists
+  # Get it here: http://www.caliban.org/bash/index.shtml#completion) or
+  # on OSX: sudo port install bash-completion
+  if [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+    # Add completion to source and .
+    # complete -F _command source
+    # complete -F _command .
+    GIT_PS1="__git_ps1"
+  elif [ -f /etc/profile.d/bash_completion.sh ]; then
+    . /etc/profile.d/bash_completion.sh
+    # Add completion to source and .
+    # complete -F _command source
+    # complete -F _command .
+    GIT_PS1="__git_ps1"
+  elif [ -f /opt/local/etc/bash_completion ]; then
+    . /opt/local/etc/bash_completion
+    # Add completion to source and .
+    # complete -F _command source
+    # complete -F _command .
+    GIT_PS1="__git_ps1"
+  elif hash brew 2>/dev/null && [ -f $(brew --prefix)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+    # Add completion to source and .
+    # complete -F _command source
+    # complete -F _command .
+    GIT_PS1="__git_ps1"
+  fi
+  if ! hash __git_ps1 2>/dev/null; then
+    # Last resort!
+    if [ -f /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh ]; then
+      . /Library/Developer/CommandLineTools/usr/share/git-core/git-prompt.sh
+      # Add completion to source and .
+      # complete -F _command source
+      # complete -F _command .
+      GIT_PS1="__git_ps1"
+    elif [ -f /usr/share/git-core/contrib/completion/git-prompt.sh ]; then
+      . /usr/share/git-core/contrib/completion/git-prompt.sh
+      # Add completion to source and .
+      # complete -F _command source
+      # complete -F _command .
+      GIT_PS1="__git_ps1"
+    else
+      GIT_PS1=""
+    fi
+  fi
 
-	# 	if [ "${USER}" == "root" ]; then
-	# 		prompt_username="\[${COLOR_LIGHT_RED}\]\u"
-	# 		prompt_char="#"
-	# 	else
-	# 		prompt_username="\[${COLOR_LIGHT_CYAN}\]\u"
-	# 		prompt_char="\$"
-	# 	fi
 
-	# 	if [ $IS_REMOTE = 'true' ] ; then
-	# 		prompt="\[${COLOR_PURPLE}\]\h\[${COLOR_NC}\]:\[${COLOR_LIGHT_PURPLE}\]\W\[${COLOR_GRAY}\]$($GIT_PS1) ${prompt_username}\[${COLOR_NC}\]"
-	# 	else
-	# 		prompt="\[${COLOR_CYAN}\]\h\[${COLOR_NC}\]:\[${COLOR_LIGHT_CYAN}\]\W\[${COLOR_GRAY}\]$($GIT_PS1) ${prompt_username}\[${COLOR_NC}\]"
-	# 	fi
 
-	# 	if test $previous_return_value -eq 0
-	# 	then
-	# 		PS1="${prompt}${prompt_char} "
-	# 	else
-	# 		PS1="${prompt}\[${COLOR_RED}\]${prompt_char} \[${COLOR_NC}\]"
-	# 	fi
+  # Prompts ----------------------------------------------------------
+  #git_dirty_flag() {
+    #git status 2> /dev/null | grep -c : | awk '{if ($1 > 0) print "⚡"}'
+  #}
 
-	# 	if [ "$TERM_PROGRAM" == "Apple_Terminal" ] && [ -z "$INSIDE_EMACS" ]; then
-	# 		# Identify the directory using a "file:" scheme URL,
-	# 		# including the host name to disambiguate local vs.
-	# 		# remote connections. Percent-escape spaces.
-	# 		local SEARCH=' '
-	# 		local REPLACE='%20'
-	# 		local PWD_URL="file://$HOSTNAME${PWD//$SEARCH/$REPLACE}"
-	# 		printf '\e]7;%s\a' "$PWD_URL"
-	# 		update_terminal_cwd
-	# 	fi
-	# }
-	# PROMPT_COMMAND=prompt_func
+  # prompt_func() {
+  #   previous_return_value=$?;
 
-	function _update_ps1() {
-		export PS1="$(~/.powerline-shell.py $? 2> /dev/null)"
-	}
-	export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+  #   if [ "${USER}" == "root" ]; then
+  #     prompt_username="\[${COLOR_LIGHT_RED}\]\u"
+  #     prompt_char="#"
+  #   else
+  #     prompt_username="\[${COLOR_LIGHT_CYAN}\]\u"
+  #     prompt_char="\$"
+  #   fi
 
-	# export PS1="\[${COLOR_GREEN}\]\w\[${COLOR_NC}\] > "	 # Primary prompt with only a path
-	# export PS1="\[${COLOR_RED}\]\w > \[${COLOR_NC}\]"	 # Primary prompt with only a path, for root, need condition to use this for root
-	# export PS1="\[${COLOR_GRAY}\]\u@\h \[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]"	# Primary prompt with user, host, and path
+  #   if [ $IS_REMOTE = 'true' ] ; then
+  #     prompt="\[${COLOR_PURPLE}\]\h\[${COLOR_NC}\]:\[${COLOR_LIGHT_PURPLE}\]\W\[${COLOR_GRAY}\]$($GIT_PS1) ${prompt_username}\[${COLOR_NC}\]"
+  #   else
+  #     prompt="\[${COLOR_CYAN}\]\h\[${COLOR_NC}\]:\[${COLOR_LIGHT_CYAN}\]\W\[${COLOR_GRAY}\]$($GIT_PS1) ${prompt_username}\[${COLOR_NC}\]"
+  #   fi
 
-	# This runs before the prompt and sets the title of the xterm* window.	If you set the title in the prompt
-	# weird wrapping errors occur on some systems, so this method is superior
-	#export PROMPT_COMMAND='echo -ne "\033]0;${PWD##*/} ${USER}@${HOSTNAME%%.*}"; echo -ne "\007"'	# user@host path
+  #   if test $previous_return_value -eq 0
+  #   then
+  #     PS1="${prompt}${prompt_char} "
+  #   else
+  #     PS1="${prompt}\[${COLOR_RED}\]${prompt_char} \[${COLOR_NC}\]"
+  #   fi
 
-	export PS2='> '		 # Secondary prompt
-	export PS3='#? '	 # Prompt 3
-	export PS4='+'		 # Prompt 4
+  #   if [ "$TERM_PROGRAM" == "Apple_Terminal" ] && [ -z "$INSIDE_EMACS" ]; then
+  #     # Identify the directory using a "file:" scheme URL,
+  #     # including the host name to disambiguate local vs.
+  #     # remote connections. Percent-escape spaces.
+  #     local SEARCH=' '
+  #     local REPLACE='%20'
+  #     local PWD_URL="file://$HOSTNAME${PWD//$SEARCH/$REPLACE}"
+  #     printf '\e]7;%s\a' "$PWD_URL"
+  #     update_terminal_cwd
+  #   fi
+  # }
+  # PROMPT_COMMAND=prompt_func
 
-	function xtitle {	 # change the title of your xterm* window
-		# unset PROMPT_COMMAND
-		echo -ne "\033]0;$1\007"
-	}
+  function _update_ps1() {
+    export PS1="$(~/.powerline-shell.py $? 2> /dev/null)"
+  }
+  export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+
+  # export PS1="\[${COLOR_GREEN}\]\w\[${COLOR_NC}\] > "  # Primary prompt with only a path
+  # export PS1="\[${COLOR_RED}\]\w > \[${COLOR_NC}\]"  # Primary prompt with only a path, for root, need condition to use this for root
+  # export PS1="\[${COLOR_GRAY}\]\u@\h \[${COLOR_GREEN}\]\w > \[${COLOR_NC}\]"  # Primary prompt with user, host, and path
+
+  # This runs before the prompt and sets the title of the xterm* window.  If you set the title in the prompt
+  # weird wrapping errors occur on some systems, so this method is superior
+  #export PROMPT_COMMAND='echo -ne "\033]0;${PWD##*/} ${USER}@${HOSTNAME%%.*}"; echo -ne "\007"'  # user@host path
+
+  export PS2='> '    # Secondary prompt
+  export PS3='#? '   # Prompt 3
+  export PS4='+'     # Prompt 4
+
+  function xtitle {  # change the title of your xterm* window
+    # unset PROMPT_COMMAND
+    echo -ne "\033]0;$1\007"
+  }
 
 fi
 
@@ -219,45 +219,45 @@ cl() { cd $1; ls -la; }
 
 source ~/.bin/bashmarks.sh
 # I got the following from, and mod'd it: http://www.macosxhints.com/article.php?story=20020716005123797
-#		 The following aliases (save & show) are for saving frequently used directories
-#		 You can save a directory using an abbreviation of your choosing. Eg. save ms
-#		 You can subsequently move to one of the saved directories by using cd with
-#		 the abbreviation you chose. Eg. cd ms	(Note that no '$' is necessary.)
-if [ ! -f ~/.dirs ]; then	 # if doesn't exist, create it
-	touch ~/.dirs
+#    The following aliases (save & show) are for saving frequently used directories
+#    You can save a directory using an abbreviation of your choosing. Eg. save ms
+#    You can subsequently move to one of the saved directories by using cd with
+#    the abbreviation you chose. Eg. cd ms  (Note that no '$' is necessary.)
+if [ ! -f ~/.dirs ]; then  # if doesn't exist, create it
+  touch ~/.dirs
 fi
 
 alias show='cat ~/.dirs'
 save (){
-	command sed "/!$/d" ~/.dirs > ~/.dirs1; \mv ~/.dirs1 ~/.dirs; echo "$@"=\"`pwd`\" >> ~/.dirs; source ~/.dirs ;
-}	 #"
-source ~/.dirs	# Initialization for the above 'save' facility: source the .sdirs file
+  command sed "/!$/d" ~/.dirs > ~/.dirs1; \mv ~/.dirs1 ~/.dirs; echo "$@"=\"`pwd`\" >> ~/.dirs; source ~/.dirs ;
+}  #"
+source ~/.dirs  # Initialization for the above 'save' facility: source the .sdirs file
 shopt -s cdable_vars # set the bash option so that no '$' is required when using the above facility
 
 
 
 # Editors ----------------------------------------------------------
 if [ "$OS" = "darwin" ] ; then
-	# OS-X SPECIFIC - TextMate, w is to wait for window to close
-	#export EDITOR='mate -w'
-	# OS-X SPECIFIC - Sublime Text, w is to wait for window to close
-	export EDITOR='subl -wn'
+  # OS-X SPECIFIC - TextMate, w is to wait for window to close
+  #export EDITOR='mate -w'
+  # OS-X SPECIFIC - Sublime Text, w is to wait for window to close
+  export EDITOR='subl -wn'
 else
-	# Command line
-	export EDITOR='vim'
-	# Linux/gnome
-	#export EDITOR='gedit'
+  # Command line
+  export EDITOR='vim'
+  # Linux/gnome
+  #export EDITOR='gedit'
 fi
 export GIT_EDITOR='vim'
 export SVN_EDITOR='vim'
 #alias gvim='/Applications/MacVim.app/Contents/MacOS/vim -g'
 
 if [ "$OS" = "darwin" ] ; then
-	alias v=mvim
-	alias vc=vim
-	alias vt='mvim --remote-tab'
+  alias v=mvim
+  alias vc=vim
+  alias vt='mvim --remote-tab'
 else
-	alias v=vim
+  alias v=vim
 fi
 
 alias edit='$EDITOR'
@@ -278,19 +278,19 @@ alias edit='$EDITOR'
 
 # Sluething----------------------------------------------------
 findportuser() {
-	lsof -i :"$1"
+  lsof -i :"$1"
 }
 
 findhosts(){
-	nmap -sP -n -oG - "$1"/24 | grep "Up" | awk '{print $2}' -
-	echo "To scan those do: nmap $1-254"
-	echo "To scan and OS detect those do: sudo nmap -O $1-254"
-	echo "To intensly scan one do: sudo nmap -sV -vv -PN $1"
+  nmap -sP -n -oG - "$1"/24 | grep "Up" | awk '{print $2}' -
+  echo "To scan those do: nmap $1-254"
+  echo "To scan and OS detect those do: sudo nmap -O $1-254"
+  echo "To intensly scan one do: sudo nmap -sV -vv -PN $1"
 }
 
 monitor_traffic(){
-	# install ngrep with sudo port install ngrep
-	sudo ngrep -W byline -qld en1 "$1"
+  # install ngrep with sudo port install ngrep
+  sudo ngrep -W byline -qld en1 "$1"
 }
 
 
@@ -329,40 +329,40 @@ alias clear="clear && printf '\e[3J'"
 alias profileme="history | awk '{print \$2}' | awk 'BEGIN{FS=\"|\"}{print \$1}' | sort | uniq -c | sort -n | tail -n 20 | sort -nr"
 
 if [ "$OS" = "linux" ] ; then
-	alias processes_all='ps -AFH'
-	alias systail='tail -f /var/log/syslog'
+  alias processes_all='ps -AFH'
+  alias systail='tail -f /var/log/syslog'
 else
-	alias processes_all='ps -Afjv'
-	alias systail='tail -f /var/log/system.log'
+  alias processes_all='ps -Afjv'
+  alias systail='tail -f /var/log/system.log'
 fi
 
 killhard() {
-	kill -9 "$1"
+  kill -9 "$1"
 }
 
 # Search
 # Use ack for grepping and find if ack is available
 # sudo port install p5-app-ack
 if type -P ack &>/dev/null ; then
-	g(){
-		ack "$*" --all-types --color-match=green --color-filename=blue --smart-case
-	}
-	gw(){
-		ack "$*" --all-types --color-match=green --color-filename=blue --word-regexp --smart-case
-	}
-	gnolog(){
-		ack "$*" --all-types --ignore-dir=log --color-match=green --color-filename=blue --smart-case
-	}
-	f(){
-		ack -i -g ".*$*[^\/]*$" | highlight blue ".*/" green "$*[^/]"
-	}
+  g(){
+    ack "$*" --all-types --color-match=green --color-filename=blue --smart-case
+  }
+  gw(){
+    ack "$*" --all-types --color-match=green --color-filename=blue --word-regexp --smart-case
+  }
+  gnolog(){
+    ack "$*" --all-types --ignore-dir=log --color-match=green --color-filename=blue --smart-case
+  }
+  f(){
+    ack -i -g ".*$*[^\/]*$" | highlight blue ".*/" green "$*[^/]"
+  }
 else
-	g(){
-		grep -Rin $1 *
-	}
-	f(){
-		find . -iname "$1"
-	}
+  g(){
+    grep -Rin $1 *
+  }
+  f(){
+    find . -iname "$1"
+  }
 fi
 
 
@@ -383,20 +383,20 @@ alias spin_kicker="kicker -r rails -b 'spin push'"
 
 # Bring in the other files ----------------------------------------------------
 if [ $IS_INTERACTIVE = 'true' ] ; then
-	source ~/.bashrc_help
+  source ~/.bashrc_help
 
-	if [ -e ~/.bash_profile_local ]; then
-		source ~/.bash_profile_local
-	fi
+  if [ -e ~/.bash_profile_local ]; then
+    source ~/.bash_profile_local
+  fi
 
-	source ~/.bin/mq/mq.sh # MySQL tools
-	source ~/.bin/rr/rr.sh # Rails tools
-	source ~/.bin/gt/gt.sh # Git tools
-	source ~/.bin/sv/sv.sh # SVN tools
+  source ~/.bin/mq/mq.sh # MySQL tools
+  source ~/.bin/rr/rr.sh # Rails tools
+  source ~/.bin/gt/gt.sh # Git tools
+  source ~/.bin/sv/sv.sh # SVN tools
 fi
 
 if [ -f ~/.bashrc_local ]; then
-	source ~/.bashrc_local
+  source ~/.bashrc_local
 fi
 
 
