@@ -312,7 +312,11 @@ alias drmrf='docker ps -a -q | xargs docker stop; docker ps -a -q | xargs docker
 
 # Git
 alias gs='git status'
+alias gvis='git visual'
 alias gdff='git diff'
+alias gdfft='git difftool'
+alias gdmg='git merge'
+alias gdmgt='git mergetool'
 alias gitaliases='source ~/Dotfiles/etc/gitaliases'
 
 # Misc
