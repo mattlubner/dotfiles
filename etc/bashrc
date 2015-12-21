@@ -18,24 +18,31 @@ export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 export CLICOLOR=1
 
 if [ "$OS" = 'linux' ]; then
-  alias ls='ls --color=auto' # For linux, etc
-  # ls colors, see: http://www.linux-sxs.org/housekeeping/lscolors.html
-#  export LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rb=90'  #LS_COLORS is not supported by the default ls command in OS-X
-  export LS_COLORS='di=1;36:fi=0:ln=35:pi=5;33:so=5;32:bd=5;34;46:cd=5;34;43:or=5;31;40:mi=31;40:ex=31:*.rb=90'  #LS_COLORS is not supported by the default ls command in OS-X
+  # LINUX-SPECIFIC
+  #   ls flag
+  alias ls='ls --color=auto'
+  #   ${LS_COLORS} codifies colors for `ls` command
+  #   @link http://www.linux-sxs.org/housekeeping/lscolors.html
+  export LS_COLORS='di=1;36:fi=0:ln=35:pi=5;33:so=5;32:bd=5;34;46:cd=5;34;43:or=5;31;40:mi=31;40:ex=31:*.rb=90'
+  # export LS_COLORS='di=1:fi=0:ln=31:pi=5:so=5:bd=5:cd=5:or=31:mi=0:ex=35:*.rb=90'
 elif [ "$OS" = 'darwin' ]; then
-  alias ls='ls -G'  # OS-X SPECIFIC - the -G command in OS-X is for colors, in Linux it's no groups
+  # OSX-SPECIFIC
+  #   -G flag means colors (in Linux it hides file groups)
+  alias ls='ls -G'
+  #   ${LSCOLORS} codifies colors for `ls` command
+  #   @link https://developer.apple.com/library/mac/documentation/Darwin/Reference/ManPages/man1/ls.1.html
   export LSCOLORS='Gxfxcxdxbxegedabagacad'
-#  Gx directory (bold cyan)
-#    fx symlink (magenta)
-#      cx socket (green)
-#        dx pipe (brown)
-#          bx exec (red)
-#            eg block special (blue on cyan)
-#              ed char special (blue on brown)
-#                ab exec w/ setuid (black on red)
-#                  ag exec w/ setgid (black on cyan)
-#                    ac dir writable to others w/ sticky (black on green)
-#                      ad dir writable to others w/o sticky (black on brown)
+  #                │ │ │ │ │ │ │ │ │ │ └╴ad ─── dir writable to others w/o sticky ─── black on brown
+  #                │ │ │ │ │ │ │ │ │ └╴ac ───── dir writable to others w/ sticky ──── black on green
+  #                │ │ │ │ │ │ │ │ └╴ag ─────── exec w/ setgid ────────────────────── black on cyan
+  #                │ │ │ │ │ │ │ └╴ab ───────── exec w/ setuid ────────────────────── black on red
+  #                │ │ │ │ │ │ └╴ed ─────────── char special ──────────────────────── blue on brown
+  #                │ │ │ │ │ └╴eg ───────────── block special ─────────────────────── blue on cyan
+  #                │ │ │ │ └╴bx ─────────────── exec ──────────────────────────────── red
+  #                │ │ │ └╴dx ───────────────── pipe ──────────────────────────────── brown
+  #                │ │ └╴cx ─────────────────── socket ────────────────────────────── green
+  #                │ └╴fx ───────────────────── symlink ───────────────────────────── magenta
+  #                └╴Gx ─────────────────────── directory ─────────────────────────── bold cyan
 fi
 
 # Setup some colors to use later in interactive shell or scripts
