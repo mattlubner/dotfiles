@@ -315,8 +315,9 @@ alias d='docker'
 alias dps='docker ps'
 alias dpsa='docker ps -a'
 alias drmrf='docker ps -a -q | xargs docker stop; docker ps -a -q | xargs docker rm'
-alias drmi='docker rmi $(docker images -q)'
-alias drmif='docker rmi -f $(docker images -q)'
+alias drmid='docker rmi $(docker images -q --filter dangling=true)'
+alias drmir='docker rmi $(docker images -q)'
+alias drmirf='docker rmi -f $(docker images -q)'
 
 # Docker Compose
 alias fig='docker-compose'
@@ -428,3 +429,4 @@ fi
 #elif
 #else
 #fi
+
