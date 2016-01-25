@@ -336,7 +336,7 @@ alias gitaliases='source ~/Dotfiles/etc/gitaliases'
 
 # Misc
 alias reloadbash='source ~/.bash_profile'
-alias refreshbash='clear;source ~/.bash_profile'
+alias clearreloadbash='clear;source ~/.bash_profile'
 alias ducks='du -cksh * | sort -rn|head -11' # Lists folders and files sizes in the current folder
 alias m='more'
 alias top='top -o cpu' # os x
