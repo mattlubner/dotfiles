@@ -10,22 +10,21 @@ export PLATFORM="$MACHINE-$OS-$OSVERSION"
 
 
 # Path ------------------------------------------------------------
-add_to_path() {
-  [ -d "$1" ] && ! [[ "$PATH" =~ (^|:)"$1"(:|$) ]] && export PATH="$1:$PATH"
-}
+if ! declare -f -F pathprepend > /dev/null; then
+  pathprepend() {
+    [ -d "$1" ] && ! [[ "$PATH" =~ (^|:)"$1"(:|$) ]] && export PATH="$1:$PATH"
+  }
+fi
 
 # Include common global script/binary directories
-add_to_path "/opt/local/bin"
-add_to_path "/opt/local/sbin"
-add_to_path "/usr/local/bin"
-add_to_path "/usr/local/sbin"
+pathprepend "/opt/local/bin"
+pathprepend "/opt/local/sbin"
+pathprepend "/usr/local/bin"
+pathprepend "/usr/local/sbin"
 
 # Include common custom script/binary directories
-add_to_path "$HOME/bin"
-add_to_path "$HOME/.bin"
-
-# Cleanup
-unset -f add_to_path
+pathprepend "$HOME/bin"
+pathprepend "$HOME/.bin"
 
 
 
