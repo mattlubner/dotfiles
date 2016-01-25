@@ -10,11 +10,9 @@ export PLATFORM="$MACHINE-$OS-$OSVERSION"
 
 
 # Path ------------------------------------------------------------
-if ! declare -f -F pathprepend > /dev/null; then
-  pathprepend() {
-    [ -d "$1" ] && ! [[ "$PATH" =~ (^|:)"$1"(:|$) ]] && export PATH="$1:$PATH"
-  }
-fi
+pathprepend() {
+  [ -d "$1" ] && ! [[ "$PATH" =~ (^|:)"$1"(:|$) ]] && export PATH="$1:$PATH"
+}
 
 # Include common global script/binary directories
 pathprepend "/opt/local/bin"
