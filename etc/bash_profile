@@ -10,14 +10,22 @@ export PLATFORM="$MACHINE-$OS-$OSVERSION"
 
 
 # Path ------------------------------------------------------------
-[ -d "/opt/local/bin" ] && export PATH="/opt/local/bin:${PATH}"
-[ -d "/opt/local/sbin" ] && export PATH="/opt/local/sbin:${PATH}"
-[ -d "/usr/local/bin" ] && export PATH="/usr/local/bin:${PATH}"
-[ -d "/usr/local/sbin" ] && export PATH="/usr/local/sbin:${PATH}"
+add_to_path() {
+  [ -d "$1" ] && ! [[ "$PATH" =~ (^|:)"$1"(:|$) ]] && export PATH="$1:$PATH"
+}
 
-# Detect and include custom script/binary directories
-[ -d "${HOME}/bin" ] && export PATH="${HOME}/bin:${PATH}"
-[ -d "${HOME}/.bin" ] && export PATH="${HOME}/.bin:${PATH}"
+# Include common global script/binary directories
+add_to_path "/opt/local/bin"
+add_to_path "/opt/local/sbin"
+add_to_path "/usr/local/bin"
+add_to_path "/usr/local/sbin"
+
+# Include common custom script/binary directories
+add_to_path "$HOME/bin"
+add_to_path "$HOME/.bin"
+
+# Cleanup
+unset -f add_to_path
 
 
 
