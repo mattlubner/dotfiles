@@ -194,9 +194,9 @@ if [ $IS_INTERACTIVE = 'true' ] ; then # Interactive shell only
   # PROMPT_COMMAND=prompt_func
 
   function _update_ps1() {
-    export PS1="$(~/.powerline-shell.py $? 2> /dev/null)"
+    export PS1="$(${HOME}/.powerline-shell.py $? 2> /dev/null)"
   }
-  export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
+  ! [[ "$PROMPT_COMMAND" =~ ^"_update_ps1;" ]] && export PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 
   # export PS1="\[${COLOR_GREEN}\]\w\[${COLOR_NC}\] > "  # Primary prompt with only a path
   # export PS1="\[${COLOR_RED}\]\w > \[${COLOR_NC}\]"  # Primary prompt with only a path, for root, need condition to use this for root
