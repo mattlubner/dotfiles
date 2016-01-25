@@ -408,6 +408,14 @@ alias spin_kicker="kicker -r rails -b 'spin push'"
 
 
 
+# Node ----------------------------------------------------
+
+# NVM
+export NVM_DIR="${HOME}/.nvm"
+[ -s "${NVM_DIR}/nvm.sh" ] && . "${NVM_DIR}/nvm.sh"  # This loads nvm
+
+
+
 # Bring in the other files ----------------------------------------------------
 if [ $IS_INTERACTIVE = 'true' ] ; then
   source ~/.bashrc_help
