@@ -311,18 +311,28 @@ alias lla='ls -lah'
 
 # Docker Machine
 alias dm='docker-machine'
+
+# Docker Containers
 alias d='docker'
-alias dps='docker ps'
-alias dpsa='docker ps -a'
+alias dls='docker ps'
+alias dlsa='docker ps -a'
 alias drmrf='docker ps -a -q | xargs docker stop; docker ps -a -q | xargs docker rm'
+alias dps='echo "use \"dls\" instead"'
+alias dpsa='echo "use \"dlsa\" instead"'
+
+# Docker Images
+alias dlsi='docker images'
+alias drmi='docker rmi'
 alias drmid='docker rmi $(docker images -q --filter dangling=true)'
+alias drmidf='docker rmi -f $(docker images -q --filter dangling=true)'
 alias drmir='docker rmi $(docker images -q)'
 alias drmirf='docker rmi -f $(docker images -q)'
 
 # Docker Compose
 alias fig='docker-compose'
 alias frmrf='docker-compose stop; docker-compose rm -f'
-alias fps='docker-compose ps'
+alias fls='docker-compose ps'
+alias fps='echo "use \"fls\" instead"'
 
 # Git
 alias gs='git status'
