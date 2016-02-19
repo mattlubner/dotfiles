@@ -369,6 +369,11 @@ elif [ "$OS" = 'darwin' ]; then
   # else unrecognized os! :P
 fi
 
+mkcd() {
+  mkdir $@
+  cd ${@: -1}
+}
+
 killhard() {
   kill -9 "$1"
 }
