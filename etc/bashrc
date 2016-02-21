@@ -65,6 +65,7 @@ export COLOR_GRAY='\033[1;30m'
 export COLOR_LIGHT_GRAY='\033[0;37m'
 # alias colorslist="set | egrep 'COLOR_\w*'"  # lists all the colors
 alias colorslist="set | egrep 'COLOR_[a-zA-Z0-9_]+=\w*'"  # lists all the colors
+alias colors="eval $(echo "echo -ne \"\""; set | awk 'BEGIN { FS="="; } /^COLOR_/ { print "echo -e ${" $1 "}" $1 "${COLOR_NC};" }')"
 
 
 
