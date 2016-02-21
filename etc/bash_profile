@@ -37,6 +37,7 @@ echo -e "Shell: $($(echo ${SHELL}) --version|sed -e ':a' -e 'N' -e '$!ba' -e 's/
 echo -ne "Uptime: "; uptime
 # echo -ne "System Time: "; date
 echo -ne "Nvm: "; nvmc
+echo -ne "Docker: "; dmstatus
 echo -ne "${COLOR_NC}"
 
 

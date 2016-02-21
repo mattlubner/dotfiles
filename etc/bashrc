@@ -312,6 +312,8 @@ alias lla='ls -lah'
 
 # Docker Machine
 alias dm='docker-machine'
+alias dma='echo -n $(docker-machine active 2>/dev/null || echo "stopped")'
+alias dmstatus='dma; docker-machine active >/dev/null 2>&1 && echo " ($(docker-machine version $(dma)))" || echo ""'
 
 # Docker Containers
 alias d='docker'
