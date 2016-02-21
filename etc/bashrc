@@ -344,6 +344,10 @@ alias gmrg='git merge'
 alias gmrgt='git mergetool'
 alias gitaliases='source ~/Dotfiles/etc/gitaliases'
 
+# Npm / Nvm
+alias nvmc='echo -e "${COLOR_GREEN}nvm -> $(nvm current || echo "system") (node $(node --version), npm v$(npm --version))${COLOR_NC}"'
+alias npmls='nvmc;npm ls -g --depth 0'
+
 # Misc
 alias reloadbash='source ~/.bash_profile'
 alias clearreloadbash='clear;source ~/.bash_profile'
