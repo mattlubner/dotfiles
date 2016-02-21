@@ -354,7 +354,7 @@ alias gitaliases='source ~/Dotfiles/etc/gitaliases'
 
 # Npm / Nvm
 alias nvmstatus='echo -e "$(nvm current || echo "system") (node $(node --version), npm v$(npm --version))"'
-alias npmls='echo -ne "${COLOR_GREEN}nvm -> $(nvmstatus) ${COLOR_NC}";npm ls -g --depth 0'
+alias npmls='echo -e "${COLOR_GREEN}nvm -> $(nvmstatus) ${COLOR_NC}";npm ls -g --depth 0'
 
 # Misc
 alias reloadbash='source ~/.bash_profile'
