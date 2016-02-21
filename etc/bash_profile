@@ -32,10 +32,11 @@ source ~/.bashrc
 
 # Hello Messsage --------------------------------------------------
 echo -ne "${COLOR_GRAY}"
-echo -e "Kernel Information: " `uname -smr`
-echo -e "`bash --version`"
+echo -e "Kernel:" `uname -smr`
+echo -e "Shell: $($(echo ${SHELL}) --version|sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/; /g')"
 echo -ne "Uptime: "; uptime
-echo -ne "Server time is: "; date
+# echo -ne "System Time: "; date
+echo -ne "Nvm: "; nvmc
 echo -ne "${COLOR_NC}"
 
 
