@@ -313,7 +313,7 @@ alias lla='ls -lah'
 # Docker Machine
 alias dm='docker-machine'
 alias dma='echo -n $(docker-machine active 2>/dev/null || echo "stopped")'
-alias dmstatus='dma; docker-machine active >/dev/null 2>&1 && echo " ($(docker-machine version $(dma)))" || echo ""'
+alias dmv='docker-machine --version | awk "{print \$3}" | sed "s/,//"'
 
 # Docker Containers
 alias d='docker'
@@ -336,6 +336,10 @@ alias fig='docker-compose'
 alias frmrf='docker-compose stop; docker-compose rm -f'
 alias fls='docker-compose ps'
 alias fps='echo "use \"fls\" instead"'
+alias figv='docker-compose --version | awk "{print \$3}" | sed "s/,//"'
+
+# Docker
+alias dmstatus='dma; docker-machine active >/dev/null 2>&1 && echo " (docker-machine v$(dmv), docker-compose v$(figv), docker v$(docker-machine version $(dma)))" || echo ""'
 
 # Git
 alias gs='git status'
