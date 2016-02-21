@@ -312,8 +312,9 @@ alias lla='ls -lah'
 
 # Docker Machine
 alias dm='docker-machine'
+alias dmv='echo -n "v"; docker-machine --version | awk "{print \$3}" | sed "s/,//"'
 alias dma='echo -n $(docker-machine active 2>/dev/null || echo "stopped")'
-alias dmv='docker-machine --version | awk "{print \$3}" | sed "s/,//"'
+alias dmav='docker-machine active >/dev/null 2>&1 && echo "v$(docker-machine version $(dma))" || echo "n/a"'
 
 # Docker Containers
 alias d='docker'
@@ -336,10 +337,10 @@ alias fig='docker-compose'
 alias frmrf='docker-compose stop; docker-compose rm -f'
 alias fls='docker-compose ps'
 alias fps='echo "use \"fls\" instead"'
-alias figv='docker-compose --version | awk "{print \$3}" | sed "s/,//"'
+alias figv='echo -n "v"; docker-compose --version | awk "{print \$3}" | sed "s/,//"'
 
 # Docker
-alias dmstatus='dma; docker-machine active >/dev/null 2>&1 && echo " (docker-machine v$(dmv), docker-compose v$(figv), docker v$(docker-machine version $(dma)))" || echo ""'
+alias dmstatus='echo "$(dma) (docker-machine $(dmv), docker-compose $(figv), docker $(dmav))"'
 
 # Git
 alias gs='git status'
@@ -353,7 +354,7 @@ alias gitaliases='source ~/Dotfiles/etc/gitaliases'
 
 # Npm / Nvm
 alias nvmstatus='echo -e "$(nvm current || echo "system") (node $(node --version), npm v$(npm --version))"'
-alias npmls='echo -ne "${COLOR_GREEN}nvm -> ";nvmstatus;echo -ne "${COLOR_NC}";npm ls -g --depth 0'
+alias npmls='echo -ne "${COLOR_GREEN}nvm -> $(nvmstatus) ${COLOR_NC}";npm ls -g --depth 0'
 
 # Misc
 alias reloadbash='source ~/.bash_profile'
