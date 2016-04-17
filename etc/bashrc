@@ -350,6 +350,7 @@ alias gdff='git diff'
 alias gdfft='git difftool'
 alias gmrg='git merge'
 alias gmrgt='git mergetool'
+alias gcnv='git commit --no-verify'
 alias gitaliases='source ~/Dotfiles/etc/gitaliases'
 
 # Npm / Nvm
