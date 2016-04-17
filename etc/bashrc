@@ -382,6 +382,16 @@ elif [ "$OS" = 'darwin' ]; then
   # else unrecognized os! :P
 fi
 
+doin() {
+  local DIR=$1
+  shift
+  if [[ -d $DIR ]]; then
+    pushd $DIR &> /dev/null
+    $@
+    popd &> /dev/null
+  fi
+}
+
 mkcd() {
   mkdir $@
   cd ${@: -1}
