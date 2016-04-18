@@ -310,6 +310,10 @@ alias ll='ls -hl'
 alias la='ls -a'
 alias lla='ls -lah'
 
+# Dinghy
+alias dng='dinghy'
+alias dngv='echo -n "v"; dinghy version | awk "{print \$2}" | sed "s/,//"'
+
 # Docker Machine
 alias dm='docker-machine'
 alias dmv='echo -n "v"; docker-machine --version | awk "{print \$3}" | sed "s/,//"'
@@ -340,7 +344,12 @@ alias fps='echo "use \"fls\" instead"'
 alias figv='echo -n "v"; docker-compose --version | awk "{print \$3}" | sed "s/,//"'
 
 # Docker
-alias dmstatus='echo "$(dma) (docker-machine $(dmv), docker-compose $(figv), docker $(dmav))"'
+alias dkrv='echo -n "v"; docker --version | awk "{print \$3}" | sed "s/,//"'
+if [[ -z "$(which dinghy)" ]]; then
+  alias dstat='echo "$(dma) (docker-machine $(dmv), docker-compose $(figv), docker $(dmav))"'
+else
+  alias dstat='echo "$(dma) (dinghy $(dngv), docker-compose $(figv), docker $(dkrv))"'
+fi
 
 # Git
 alias gs='git status'
