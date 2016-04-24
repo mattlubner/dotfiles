@@ -376,6 +376,8 @@ dstat_docker() {
 dstat() {
   echo "$(dstat_dm_active) ($(dstat_dm), $(dstat_fig), $(dstat_docker))"
 }
+alias dmstat='echo "use \"dstat\" instead"; dstat'
+
 dmuse() {
   export DOCKER_MACHINE_ENV_DEFAULT="${DOCKER_MACHINE_ENV_DEFAULT:-default}"
   export DOCKER_MACHINE_ENV_ACTIVE="${1:-${DOCKER_MACHINE_ENV_ACTIVE:-${DOCKER_MACHINE_ENV_DEFAULT}}}"
@@ -384,7 +386,24 @@ dmuse() {
     echo "Docker Machine '${DOCKER_MACHINE_ENV_ACTIVE}' activated!"
   fi
 }
-alias dmstat='echo "use \"dstat\" instead"; dstat'
+dmhosts_update() {
+  local MACHINE_NAME_ACTIVE="$(dstat_dm_active_getname)"
+  if [[ "${MACHINE_NAME_ACTIVE}" == "stopped" ]]; then
+    echo "No active docker machine..."
+    exit 1
+  fi
+  local DOCKER_MACHINE_ACTIVE_IP="$(docker-machine ip ${MACHINE_NAME_ACTIVE})"
+  echo "Setting docker hostname to docker-machine \"${MACHINE_NAME_ACTIVE}\" (upserting \"${DOCKER_MACHINE_ACTIVE_IP} boot2docker\" into \"/etc/hosts\")"
+  if [ "$OS" = 'linux' ]; then
+    local DMHOSTS_UPDATE_SED="sudo sed -i'.bak' -r"
+  elif [ "$OS" = 'darwin' ]; then
+    local DMHOSTS_UPDATE_SED="sudo sed -i'.bak' -E"
+  else
+    echo "Unrecognized OS; aborting..."
+    exit 1
+  fi
+  ${DMHOSTS_UPDATE_SED} 's/[^# ]+ boot2docker/'"${DOCKER_MACHINE_ACTIVE_IP}"' boot2docker/g' /etc/hosts
+}
 
 # Git
 alias gs='git status'
