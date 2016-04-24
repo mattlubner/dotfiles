@@ -310,23 +310,20 @@ alias ll='ls -hl'
 alias la='ls -a'
 alias lla='ls -lah'
 
-# Dinghy
-alias dng='dinghy'
-alias dngv='echo -n "v"; dinghy version | awk "{print \$2}" | sed "s/,//"'
-
 # Docker Machine
 alias dm='docker-machine'
-alias dmv='echo -n "v"; docker-machine --version | awk "{print \$3}" | sed "s/,//"'
-alias dma='echo -n $(docker-machine active 2>/dev/null || echo "stopped")'
-alias dmav='docker-machine active >/dev/null 2>&1 && echo "v$(docker-machine version $(dma))" || echo "n/a"'
+alias dmls='docker-machine ls'
 
-# Docker Containers
+# Dinghy
+alias dng='dinghy'
+
+# Docker
 alias d='docker'
 alias dls='docker ps'
 alias dlsa='docker ps -a'
 alias drmrf='docker ps -a -q | xargs docker stop; docker ps -a -q | xargs docker rm'
-alias dps='echo "use \"dls\" instead"'
-alias dpsa='echo "use \"dlsa\" instead"'
+alias dps='echo "use \"dls\" instead"; docker ps'
+alias dpsa='echo "use \"dlsa\" instead"; docker ps -a'
 
 # Docker Images
 alias dlsi='docker images'
@@ -340,16 +337,47 @@ alias drmirf='docker rmi -f $(docker images -q)'
 alias fig='docker-compose'
 alias frmrf='docker-compose stop; docker-compose rm -f'
 alias fls='docker-compose ps'
-alias fps='echo "use \"fls\" instead"'
-alias figv='echo -n "v"; docker-compose --version | awk "{print \$3}" | sed "s/,//"'
+alias fps='echo "use \"fls\" instead"; docker-compose ps'
 
-# Docker
-alias dkrv='echo -n "v"; docker --version | awk "{print \$3}" | sed "s/,//"'
-if [[ -z "$(which dinghy)" ]]; then
-  alias dstat='echo "$(dma) (docker-machine $(dmv), docker-compose $(figv), docker $(dmav))"'
-else
-  alias dstat='echo "$(dma) (dinghy $(dngv), docker-compose $(figv), docker $(dkrv))"'
-fi
+# Docker Stats and Helpers
+dstat_dinghy() {
+  echo -n "v"; dinghy version | awk "{print \$2}" | sed "s/,//"
+}
+dstat_dm_active_getname() {
+  echo -n $(docker-machine active 2>/dev/null || echo "stopped")
+}
+dstat_dm_active() {
+  local MACHINE_NAME_ACTIVE="$(dstat_dm_active_getname)"
+  echo -n "${MACHINE_NAME_ACTIVE}"
+  if [[ "${MACHINE_NAME_ACTIVE}" == "dinghy" ]]; then
+    echo -n " $(dstat_dinghy)"
+  fi
+}
+dstat_dm() {
+  echo -n "docker-machine v"; docker-machine --version | awk "{print \$3}" | sed "s/,//"
+}
+dstat_fig() {
+  echo -n "docker-compose v"; docker-compose --version | awk "{print \$3}" | sed "s/,//"
+}
+dstat_docker_bak() {
+  echo -n "docker v"; docker --version | awk "{print \$3}" | sed "s/,//"
+}
+dstat_docker() {
+  local MACHINE_NAME_ACTIVE="$(dstat_dm_active_getname)"
+  if [[ "${MACHINE_NAME_ACTIVE}" == "stopped" ]]; then
+    echo -n "docker n/a"
+  else
+    echo -n "docker v$(docker-machine version ${MACHINE_NAME_ACTIVE})"
+  fi
+}
+dstat() {
+  echo "$(dstat_dm_active) ($(dstat_dm), $(dstat_fig), $(dstat_docker))"
+}
+dmuse() {
+  local MACHINE_NAME=$1
+  eval "$(docker-machine env ${MACHINE_NAME} 2>/dev/null)"
+  echo "Docker Machine '${MACHINE_NAME}' activated!"
+}
 
 # Git
 alias gs='git status'
