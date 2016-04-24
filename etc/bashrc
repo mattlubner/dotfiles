@@ -402,7 +402,7 @@ dmhosts_update() {
     echo "Unrecognized OS; aborting..."
     exit 1
   fi
-  ${DMHOSTS_UPDATE_SED} 's/[^# ]+ boot2docker/'"${DOCKER_MACHINE_ACTIVE_IP}"' boot2docker/g' /etc/hosts
+  ${DMHOSTS_UPDATE_SED} 's/[^# ]+[[:space:]]+boot2docker/'"${DOCKER_MACHINE_ACTIVE_IP}"' boot2docker/g' /etc/hosts
 }
 
 # Git
