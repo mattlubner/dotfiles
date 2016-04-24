@@ -377,7 +377,8 @@ dstat() {
   echo "$(dstat_dm_active) ($(dstat_dm), $(dstat_fig), $(dstat_docker))"
 }
 dmuse() {
-  DOCKER_MACHINE_ENV_ACTIVE="${1:-${DOCKER_MACHINE_ENV_ACTIVE:-default}}"
+  export DOCKER_MACHINE_ENV_DEFAULT="${DOCKER_MACHINE_ENV_DEFAULT:-default}"
+  export DOCKER_MACHINE_ENV_ACTIVE="${1:-${DOCKER_MACHINE_ENV_ACTIVE:-${DOCKER_MACHINE_ENV_DEFAULT}}}"
   eval "$(docker-machine env ${DOCKER_MACHINE_ENV_ACTIVE} 2>/dev/null)"
   if [[ "${1}" != "" ]]; then
     echo "Docker Machine '${DOCKER_MACHINE_ENV_ACTIVE}' activated!"
