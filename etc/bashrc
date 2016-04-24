@@ -348,6 +348,9 @@ dstat_dm_active_getname() {
 }
 dstat_dm_active() {
   local MACHINE_NAME_ACTIVE="$(dstat_dm_active_getname)"
+  if [[ "${MACHINE_NAME_ACTIVE}" == "stopped" ]]; then
+    echo -n "${DOCKER_MACHINE_ENV_ACTIVE} "
+  fi
   echo -n "${MACHINE_NAME_ACTIVE}"
   if [[ "${MACHINE_NAME_ACTIVE}" == "dinghy" ]]; then
     echo -n " $(dstat_dinghy)"
@@ -374,10 +377,13 @@ dstat() {
   echo "$(dstat_dm_active) ($(dstat_dm), $(dstat_fig), $(dstat_docker))"
 }
 dmuse() {
-  local MACHINE_NAME=$1
-  eval "$(docker-machine env ${MACHINE_NAME} 2>/dev/null)"
-  echo "Docker Machine '${MACHINE_NAME}' activated!"
+  DOCKER_MACHINE_ENV_ACTIVE="${1:-${DOCKER_MACHINE_ENV_ACTIVE:-default}}"
+  eval "$(docker-machine env ${DOCKER_MACHINE_ENV_ACTIVE} 2>/dev/null)"
+  if [[ "${1}" != "" ]]; then
+    echo "Docker Machine '${DOCKER_MACHINE_ENV_ACTIVE}' activated!"
+  fi
 }
+alias dmstat='echo "use \"dstat\" instead"; dstat'
 
 # Git
 alias gs='git status'
