@@ -421,6 +421,9 @@ alias nvmstatus='echo -e "$(nvm current || echo "system") (node $(node --version
 alias npmls='echo -e "${COLOR_GREEN}nvm -> $(nvmstatus) ${COLOR_NC}";npm ls -g --depth 0'
 alias nrn='npm run'
 
+# OpenConnect / VPN
+alias vixvpn='xtitle "OpenConnect VPN - Vixlet"; sudo openconnect vpn.lax.vixlet.com'
+
 # Misc
 alias reloadbash='source ~/.bash_profile'
 alias clearreloadbash='clear;source ~/.bash_profile'
