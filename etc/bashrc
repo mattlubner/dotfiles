@@ -449,6 +449,10 @@ elif [ "$OS" = 'darwin' ]; then
   # else unrecognized os! :P
 fi
 
+dug() {
+  dig $1 | grep $1 | grep CNAME
+}
+
 doin() {
   local DIR=$1
   shift
