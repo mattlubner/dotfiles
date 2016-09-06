@@ -452,6 +452,11 @@ fi
 dug() {
   dig $1 | grep $1 | grep CNAME
 }
+diglet() {
+  echo "Digging \"${1}\"..."
+  dug $1 | grep '\-a' && echo 'Live on A!'
+  dug $1 | grep '\-b' && echo 'Live on B!'
+}
 
 doin() {
   local DIR=$1
