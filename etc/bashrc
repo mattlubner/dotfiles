@@ -453,9 +453,12 @@ dug() {
   dig $1 | grep $1 | grep CNAME
 }
 diglet() {
-  echo "Digging \"${1}\"..."
-  dug $1 | grep '\-a' && echo 'Live on A!'
-  dug $1 | grep '\-b' && echo 'Live on B!'
+  echo -ne "| ${2:-$1}\t"
+  (dug $1 | grep '\-a' > /dev/null && echo "| \"A\", as in Abra!     |") \
+  || (dug $1 | grep '\-b' > /dev/null && echo "| \"B\", as in Beedrill! |") \
+  || (echo '' && dig $1 | grep CNAME) \
+  || (echo '' && dig $1 | grep IN) \
+  || (echo '' && dig $1)
 }
 
 doin() {
