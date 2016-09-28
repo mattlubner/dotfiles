@@ -454,8 +454,11 @@ dug() {
 }
 diglet() {
   echo -ne "| ${2:-$1}\t"
-  (dug $1 | grep '\-a' > /dev/null && echo "| \"A\", as in Abra!     |") \
-  || (dug $1 | grep '\-b' > /dev/null && echo "| \"B\", as in Beedrill! |") \
+  (dug $1 | grep 'www\-a' > /dev/null && echo "| \"A\", as in Abra!     |") \
+  || (dug $1 | grep 'www\-multi\-a' > /dev/null && echo "| \"A\", as in Abra!     |") \
+  || (dug $1 | grep 'www\-b' > /dev/null && echo "| \"B\", as in Beedrill! |") \
+  || (dug $1 | grep 'www\-multi\-b' > /dev/null && echo "| \"B\", as in Beedrill! |") \
+  || (dug $1 | grep 'use\-prod\-dcos' > /dev/null && echo "| \"DCOS\", as in Doduo! |") \
   || (echo '' && dig $1 | grep CNAME) \
   || (echo '' && dig $1 | grep IN) \
   || (echo '' && dig $1)
