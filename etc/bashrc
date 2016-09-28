@@ -454,11 +454,12 @@ dug() {
 }
 diglet() {
   echo -ne "| ${2:-$1}\t"
-  (dug $1 | grep 'www\-a' > /dev/null && echo "| \"A\", as in Abra!     |") \
-  || (dug $1 | grep 'www\-multi\-a' > /dev/null && echo "| \"A\", as in Abra!     |") \
-  || (dug $1 | grep 'www\-b' > /dev/null && echo "| \"B\", as in Beedrill! |") \
-  || (dug $1 | grep 'www\-multi\-b' > /dev/null && echo "| \"B\", as in Beedrill! |") \
-  || (dug $1 | grep 'use\-prod\-dcos' > /dev/null && echo "| \"DCOS\", as in Doduo! |") \
+  local DUG_OUTPUT="$(dug $1)"
+  (echo $DUG_OUTPUT | grep 'www\-a' > /dev/null && echo "| \"A\", as in Abra!     |") \
+  || (echo $DUG_OUTPUT | grep 'www\-multi\-a' > /dev/null && echo "| \"A\", as in Abra!     |") \
+  || (echo $DUG_OUTPUT | grep 'www\-b' > /dev/null && echo "| \"B\", as in Beedrill! |") \
+  || (echo $DUG_OUTPUT | grep 'www\-multi\-b' > /dev/null && echo "| \"B\", as in Beedrill! |") \
+  || (echo $DUG_OUTPUT | grep 'use\-prod\-dcos' > /dev/null && echo "| \"DCOS\", as in Doduo! |") \
   || (echo '' && dig $1 | grep CNAME) \
   || (echo '' && dig $1 | grep IN) \
   || (echo '' && dig $1)
