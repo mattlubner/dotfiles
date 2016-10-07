@@ -465,6 +465,26 @@ diglet() {
   || (echo '' && dig $1)
 }
 
+nvm_link_abs() {
+  # usage: nvm_link_abs <package_name>
+  if [ ! -d node_modules ]; then
+    echo "nvm_link_abs: you must be within your project's base directory for this script to work!"
+    return 1
+  fi
+  npm link "$1"
+  local temp_link_target="$(readlink "node_modules/$1")"
+  if [ "/" == "${temp_link_target:0:1}" ]; then
+    # symbolic link target is already an absolute path
+    return 0
+  else
+    # symbolic link target is a relative path
+    local temp_link_dirname="$(dirname "$temp_link_target")"
+    local temp_path_abs="$(cd "node_modules/${temp_link_dirname##*node_modules/}/$temp_link_target" && pwd)"
+    rm "node_modules/$1"
+    ln -s "$temp_path_abs" "node_modules/$1"
+  fi
+}
+
 doin() {
   local DIR=$1
   shift
