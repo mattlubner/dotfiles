@@ -340,70 +340,55 @@ alias fls='docker-compose ps'
 alias fps='echo "use \"fls\" instead"; docker-compose ps'
 
 # Docker Stats and Helpers
-dstat_dinghy() {
-  echo -n "v"; dinghy version | awk "{print \$2}" | sed "s/,//"
-}
-dstat_dm_active_getname() {
-  echo -n $(docker-machine active 2>/dev/null || echo "stopped")
-}
-dstat_dm_active() {
-  local MACHINE_NAME_ACTIVE="$(dstat_dm_active_getname)"
-  if [[ "${MACHINE_NAME_ACTIVE}" == "stopped" ]]; then
-    echo -n "${DOCKER_MACHINE_ENV_ACTIVE} "
-  fi
-  echo -n "${MACHINE_NAME_ACTIVE}"
-  if [[ "${MACHINE_NAME_ACTIVE}" == "dinghy" ]]; then
-    echo -n " $(dstat_dinghy)"
-  fi
-}
-dstat_dm() {
-  echo -n "docker-machine v"; docker-machine --version | awk "{print \$3}" | sed "s/,//"
-}
-dstat_fig() {
-  echo -n "docker-compose v"; docker-compose --version | awk "{print \$3}" | sed "s/,//"
-}
-dstat_docker_bak() {
-  echo -n "docker v"; docker --version | awk "{print \$3}" | sed "s/,//"
-}
-dstat_docker() {
-  local MACHINE_NAME_ACTIVE="$(dstat_dm_active_getname)"
-  if [[ "${MACHINE_NAME_ACTIVE}" == "stopped" ]]; then
-    echo -n "docker n/a"
-  else
-    echo -n "docker v$(docker-machine version ${MACHINE_NAME_ACTIVE})"
-  fi
-}
-dstat() {
-  echo "$(dstat_dm_active) ($(dstat_dm), $(dstat_fig), $(dstat_docker))"
-}
-alias dmstat='echo "use \"dstat\" instead"; dstat'
 
-dmuse() {
-  export DOCKER_MACHINE_ENV_DEFAULT="${DOCKER_MACHINE_ENV_DEFAULT:-default}"
-  export DOCKER_MACHINE_ENV_ACTIVE="${1:-${DOCKER_MACHINE_ENV_ACTIVE:-${DOCKER_MACHINE_ENV_DEFAULT}}}"
-  eval "$(docker-machine env ${DOCKER_MACHINE_ENV_ACTIVE} 2>/dev/null)"
-  if [[ "${1}" != "" ]]; then
-    echo "Docker Machine '${DOCKER_MACHINE_ENV_ACTIVE}' activated!"
-  fi
-}
-dmhosts_update() {
-  local MACHINE_NAME_ACTIVE="$(dstat_dm_active_getname)"
-  if [[ "${MACHINE_NAME_ACTIVE}" == "stopped" ]]; then
-    echo "No active docker machine..."
-    exit 1
-  fi
-  local DOCKER_MACHINE_ACTIVE_IP="$(docker-machine ip ${MACHINE_NAME_ACTIVE})"
-  echo "Setting docker hostname to docker-machine \"${MACHINE_NAME_ACTIVE}\" (upserting \"${DOCKER_MACHINE_ACTIVE_IP} boot2docker\" into \"/etc/hosts\")"
-  if [ "$OS" = 'linux' ]; then
-    local DMHOSTS_UPDATE_SED="sudo sed -i'.bak' -r"
-  elif [ "$OS" = 'darwin' ]; then
-    local DMHOSTS_UPDATE_SED="sudo sed -i'.bak' -E"
-  else
-    echo "Unrecognized OS; aborting..."
-    exit 1
-  fi
-  ${DMHOSTS_UPDATE_SED} 's/[^# ]+[[:space:]]+boot2docker/'"${DOCKER_MACHINE_ACTIVE_IP}"' boot2docker/g' /etc/hosts
-}
+# dmuse: switch between docker-machine, dinghy, and docker for mac
+if declare -f dmuse >/dev/null; then
+  dmuse() {
+    if [[ -z "$WORKING_DOCKER_MACHINE_NAME_DEFAULT" ]]; then
+      export WORKING_DOCKER_MACHINE_NAME_DEFAULT="$(docker-machine ls -f "{{.Name}}" | grep dinghy || echo "default")"
+    fi
+    export WORKING_DOCKER_MACHINE_NAME="${1:-${WORKING_DOCKER_MACHINE_NAME:-${WORKING_DOCKER_MACHINE_NAME_DEFAULT}}}"
+
+    if [[ "$WORKING_DOCKER_MACHINE_NAME" == "native" ]]; then
+      unset ${!DOCKER_*}
+    else
+      eval "$(docker-machine env ${WORKING_DOCKER_MACHINE_NAME} 2>/dev/null)"
+    fi
+
+    if [[ "$1" != "" ]]; then
+      if [[ "$WORKING_DOCKER_MACHINE_NAME" == "native" ]]; then
+        echo "Docker for Mac activated!"
+      else
+        echo "Docker Machine '${WORKING_DOCKER_MACHINE_NAME}' activated!"
+      fi
+    fi
+  }
+fi
+
+# dstat: output docker statistics
+if declare -f dstat >/dev/null; then
+  dstat() {
+    # Get name of active docker machine
+    local STATS_MACHINE_NAME_ACTIVE="$(docker-machine active 2>/dev/null | tr -d '\n')"
+
+    # Get relevant binary versions...
+    local STATS_DOCKER_VERSIONS=""
+
+    # Get docker version
+    STATS_DOCKER_VERSIONS="docker v$(docker -v | awk "{print \$3}" | sed "s/,//" | tr -d '\n')"
+
+    # Get docker-compose version
+    STATS_DOCKER_VERSIONS="$STATS_DOCKER_VERSIONS, docker-compose v$(docker-compose -v | awk "{print \$3}" | sed "s/,//" | tr -d '\n')"
+
+    if [ -n "$STATS_MACHINE_NAME_ACTIVE" ]; then
+      # Get docker-machine version (only if not using Docker for Mac)
+      STATS_DOCKER_VERSIONS="$STATS_DOCKER_VERSIONS, docker-machine v$(docker-machine -v | awk "{print \$3}" | sed "s/,//" | tr -d '\n')"
+    fi
+
+    # Output docker stats
+    echo "${STATS_MACHINE_NAME_ACTIVE:-native} ($STATS_DOCKER_VERSIONS)"
+  }
+fi
 
 # Git
 alias gs='git status'
