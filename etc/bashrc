@@ -342,7 +342,7 @@ alias fps='echo "use \"fls\" instead"; docker-compose ps'
 # Docker Stats and Helpers
 
 # dmuse: switch between docker-machine, dinghy, and docker for mac
-if declare -f dmuse >/dev/null; then
+if ! declare -f dmuse >/dev/null; then
   dmuse() {
     if [[ -z "$WORKING_DOCKER_MACHINE_NAME_DEFAULT" ]]; then
       export WORKING_DOCKER_MACHINE_NAME_DEFAULT="$(docker-machine ls -f "{{.Name}}" | grep dinghy || echo "default")"
@@ -366,7 +366,7 @@ if declare -f dmuse >/dev/null; then
 fi
 
 # dstat: output docker statistics
-if declare -f dstat >/dev/null; then
+if ! declare -f dstat >/dev/null; then
   dstat() {
     # Get name of active docker machine
     local STATS_MACHINE_NAME_ACTIVE="$(docker-machine active 2>/dev/null | tr -d '\n')"
