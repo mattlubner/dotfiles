@@ -1,6 +1,8 @@
 # See following for more information: http://www.infinitered.com/blog/?p=10
 
-# Identify OS and Machine -----------------------------------------
+
+
+# Identify OS and Machine ----------------------------------------------------
 export OS=`uname -s | sed -e 's/  */-/g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
 export OSVERSION=`uname -r`; OSVERSION=`expr "$OSVERSION" : '[^0-9]*\([0-9]*\.[0-9]*\)'`
 export MACHINE=`uname -m | sed -e 's/  */-/g;y/ABCDEFGHIJKLMNOPQRSTUVWXYZ/abcdefghijklmnopqrstuvwxyz/'`
@@ -9,7 +11,7 @@ export PLATFORM="$MACHINE-$OS-$OSVERSION"
 
 
 
-# Path ------------------------------------------------------------
+# Path -----------------------------------------------------------------------
 pathprepend() {
   [ -d "$1" ] && ! [[ "$PATH" =~ (^|:)"$1"(:|$) ]] && export PATH="$1:$PATH"
 }
@@ -26,11 +28,12 @@ pathprepend "$HOME/.bin"
 
 
 
-# Load in .bashrc -------------------------------------------------
+# Load in .bashrc ------------------------------------------------------------
 source ~/.bashrc
 
 
-# Hello Messsage --------------------------------------------------
+
+# Hello Messsage -------------------------------------------------------------
 echo -ne "${COLOR_GRAY}"
 # echo -ne "System Time: "; date
 echo -ne "Uptime: "; uptime
@@ -42,7 +45,7 @@ echo -ne "${COLOR_NC}"
 
 
 
-# Notes: ----------------------------------------------------------
+# Notes: ---------------------------------------------------------------------
 # When you start an interactive shell (log in, open terminal or iTerm in OS X,
 # or create a new tab in iTerm) the following files are read and run, in this order:
 #     profile
