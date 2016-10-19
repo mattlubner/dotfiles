@@ -33,6 +33,15 @@ source ~/.bashrc
 
 
 
+# Handle house-keeping -------------------------------------------------------
+
+# If .nvmrc exists, switch to that nvm version
+if declare -f nvm_detect_use >/dev/null; then
+  nvm_detect_use >/dev/null
+fi
+
+
+
 # Hello Messsage -------------------------------------------------------------
 echo -ne "${COLOR_GRAY}"
 # echo -ne "System Time: "; date

@@ -466,6 +466,15 @@ nvm_link_abs() {
   fi
 }
 
+nvm_detect_use() {
+  if [[ -f .nvmrc && -r .nvmrc ]]; then
+    nvm use
+  elif [[ $(nvm version) != $(nvm version default)  ]]; then
+    echo "Reverting to nvm default version"
+    nvm use default
+  fi
+}
+
 doin() {
   local DIR=$1
   shift
