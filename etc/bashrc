@@ -400,7 +400,8 @@ alias gitaliases='source ~/Dotfiles/etc/gitaliases'
 # Npm / Nvm
 alias nvmstatus='echo -e "$(nvm current || echo "system") (node $(node --version), npm v$(npm --version))"'
 alias npmls='echo -e "${COLOR_GREEN}nvm -> $(nvmstatus) ${COLOR_NC}";npm ls -g --depth 0'
-alias nrn='npm run'
+#alias nrn='npm run'
+alias nr='npm run'
 alias npmpu='npm prune; npm update'
 
 # Misc
