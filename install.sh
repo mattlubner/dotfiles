@@ -52,6 +52,13 @@ else
 
   # git-completion (register that module with your installation of bash_completion)
   # ${BASH_COMPLETION_DIR} is bash_completion's configuration directory
+  if [ -z "$BASH_COMPLETION_DIR" ] && hash brew 2>/dev/null; then
+    echo "Do you wish to install bash-completion (using 'brew install bash-completion')? [y/n]; "
+    read -p "> " yn
+    case $yn in
+      [Yy]* ) brew install 'bash-completion'
+    esac
+  fi
   if [ -n "$BASH_COMPLETION_DIR" ] && [ -d ${BASH_COMPLETION_DIR} ] && [ ! -f ${BASH_COMPLETION_DIR}/git-completion.bash ]; then
     # you have bash_completion installed
     # -AND-
