@@ -395,7 +395,6 @@ alias gdfft='git difftool'
 alias gmrg='git merge'
 alias gmrgt='git mergetool'
 alias gcnv='git commit --no-verify'
-alias gitaliases='source ~/Dotfiles/etc/gitaliases'
 
 # Npm / Nvm
 alias nvmstatus='echo -e "$(nvm current || echo "system") (node $(node --version), npm v$(npm --version))"'

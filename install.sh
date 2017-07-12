@@ -43,6 +43,16 @@ else
   symlink $DIR/etc/gitignore ~/.gitignore
   symlink $DIR/etc/gitattributes ~/.gitattributes
 
+  # git aliases
+  while true; do
+    echo "Do you wish to install custom Git aliases? [y/n]: "
+    read -p "> " yn
+    case $yn in
+      [Yy]* ) source $DIR/etc/gitaliases; break;;
+      * ) break;;
+    esac
+  done
+
   # git-completion (register that module with your installation of bash_completion)
   # ${BASH_COMPLETION_DIR} is bash_completion's configuration directory
   if [ -d ${BASH_COMPLETION_DIR} ] && [ ! -f ${BASH_COMPLETION_DIR}/git-completion.bash ]; then
