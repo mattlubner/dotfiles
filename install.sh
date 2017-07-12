@@ -109,11 +109,19 @@ else
 
   # increase mac system open file and proc limits
   if [ -e /Library/LaunchDaemons ]; then
-    echo "About to install LaunchDaemons..."
-    sudo cp $DIR/etc/LaunchDaemons/limit.maxfiles.plist /Library/LaunchDaemons/
-    sudo launchctl load /Library/LaunchDaemons/limit.maxfiles.plist
-    sudo cp $DIR/etc/LaunchDaemons/limit.maxproc.plist /Library/LaunchDaemons/
-    sudo launchctl load /Library/LaunchDaemons/limit.maxproc.plist
+    while true; do
+      echo "Do you wish to install maxfiles and maxproc LaunchDaemons? [y/n]: "
+      read -p "> " yn
+      case $yn in
+        [Yy]* )
+          sudo cp $DIR/etc/LaunchDaemons/limit.maxfiles.plist /Library/LaunchDaemons/
+          sudo launchctl load /Library/LaunchDaemons/limit.maxfiles.plist
+          sudo cp $DIR/etc/LaunchDaemons/limit.maxproc.plist /Library/LaunchDaemons/
+          sudo launchctl load /Library/LaunchDaemons/limit.maxproc.plist
+          break;;
+        * ) break;;
+      esac
+    done
   fi
 
   echo "Your home directory's symbolic links now point to the files in \"$DIR/etc\""
