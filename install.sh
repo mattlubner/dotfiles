@@ -55,7 +55,7 @@ else
 
   # git-completion (register that module with your installation of bash_completion)
   # ${BASH_COMPLETION_DIR} is bash_completion's configuration directory
-  if [ -d ${BASH_COMPLETION_DIR} ] && [ ! -f ${BASH_COMPLETION_DIR}/git-completion.bash ]; then
+  if [ -n "$BASH_COMPLETION_DIR" ] && [ -d ${BASH_COMPLETION_DIR} ] && [ ! -f ${BASH_COMPLETION_DIR}/git-completion.bash ]; then
     # you have bash_completion installed
     # -AND-
     # the git-completion.bash module is not registered with bash_completion
