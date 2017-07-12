@@ -48,8 +48,12 @@ echo -ne "${COLOR_GRAY}"
 echo -ne "Uptime: "; uptime
 echo -e "Kernel:" `uname -smr`
 echo -e "Shell: $($(echo ${SHELL}) --version|sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/; /g')"
-echo -ne "Nvm: "; nvmstatus
-echo -ne "Docker: "; dstat
+if [[ -s $HOME/.nvm/nvm.sh ]]; then
+  echo -ne "Nvm: "; nvmstatus
+fi
+if hash docker 2>/dev/null; then
+  echo -ne "Docker: "; dstat
+fi
 echo -ne "${COLOR_NC}"
 
 

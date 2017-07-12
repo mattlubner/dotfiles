@@ -466,7 +466,9 @@ nvm_link_abs() {
 }
 
 nvm_detect_use() {
-  if [[ -f .nvmrc && -r .nvmrc ]]; then
+  if ! [[ -s $HOME/.nvm/nvm.sh ]]; then
+    echo -n ""
+  elif [[ -f .nvmrc && -r .nvmrc ]]; then
     nvm use
   elif [[ $(nvm version) != $(nvm version default)  ]]; then
     echo "Reverting to nvm default version"
