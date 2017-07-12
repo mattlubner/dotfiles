@@ -44,14 +44,11 @@ else
   symlink $DIR/etc/gitattributes ~/.gitattributes
 
   # git aliases
-  while true; do
-    echo "Do you wish to install custom Git aliases? [y/n]: "
-    read -p "> " yn
-    case $yn in
-      [Yy]* ) source $DIR/etc/gitaliases; break;;
-      * ) break;;
-    esac
-  done
+  echo "Do you wish to install custom Git aliases? [y/n]: "
+  read -p "> " yn
+  case $yn in
+    [Yy]* ) source $DIR/etc/gitaliases
+  esac
 
   # git-completion (register that module with your installation of bash_completion)
   # ${BASH_COMPLETION_DIR} is bash_completion's configuration directory
@@ -109,19 +106,15 @@ else
 
   # increase mac system open file and proc limits
   if [ -e /Library/LaunchDaemons ]; then
-    while true; do
-      echo "Do you wish to install maxfiles and maxproc LaunchDaemons? [y/n]: "
-      read -p "> " yn
-      case $yn in
-        [Yy]* )
-          sudo cp $DIR/etc/LaunchDaemons/limit.maxfiles.plist /Library/LaunchDaemons/
-          sudo launchctl load /Library/LaunchDaemons/limit.maxfiles.plist
-          sudo cp $DIR/etc/LaunchDaemons/limit.maxproc.plist /Library/LaunchDaemons/
-          sudo launchctl load /Library/LaunchDaemons/limit.maxproc.plist
-          break;;
-        * ) break;;
-      esac
-    done
+    echo "Do you wish to install maxfiles and maxproc LaunchDaemons? [y/n]: "
+    read -p "> " yn
+    case $yn in
+      [Yy]* )
+        sudo cp $DIR/etc/LaunchDaemons/limit.maxfiles.plist /Library/LaunchDaemons/
+        sudo launchctl load /Library/LaunchDaemons/limit.maxfiles.plist
+        sudo cp $DIR/etc/LaunchDaemons/limit.maxproc.plist /Library/LaunchDaemons/
+        sudo launchctl load /Library/LaunchDaemons/limit.maxproc.plist
+    esac
   fi
 
   echo "Your home directory's symbolic links now point to the files in \"$DIR/etc\""
