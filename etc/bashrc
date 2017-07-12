@@ -320,10 +320,10 @@ alias dng='dinghy'
 # Docker
 alias d='docker'
 alias dls='docker ps'
+alias dps='docker ps'
 alias dlsa='docker ps -a'
+alias dpsa='docker ps -a'
 alias drmrf='docker ps -a -q | xargs docker stop; docker ps -a -q | xargs docker rm'
-alias dps='echo "use \"dls\" instead"; docker ps'
-alias dpsa='echo "use \"dlsa\" instead"; docker ps -a'
 
 # Docker Images
 alias dlsi='docker images'
@@ -337,7 +337,36 @@ alias drmirf='docker rmi -f $(docker images -q)'
 alias fig='docker-compose'
 alias frmrf='docker-compose stop; docker-compose rm -f'
 alias fls='docker-compose ps'
-alias fps='echo "use \"fls\" instead"; docker-compose ps'
+alias fps='docker-compose ps'
+
+docker-compose-alias() {
+  local COMMAND="$1"
+  shift
+  local FILE=""
+  if [ "$1" == "--file" ] || [ "$1" == "-f" ]; then
+    FILE="$2"
+    shift
+    shift
+  elif [[ "$1" =~ ^\-\-file=.*$ ]]; then
+    FILE="${1#--file=}"
+    shift
+    shift
+  fi
+  if [ -z "$FILE" ]; then
+    docker-compose "$COMMAND" $@
+  else
+    if ! [[ "$FILE" =~ ^docker-compose.*\.yml$ ]]; then
+      FILE="docker-compose-${FILE}.yml"
+    fi
+    docker-compose --file "$FILE" "$COMMAND" $@
+  fi
+}
+
+alias fd='docker-compose-alias down'
+alias fu='docker-compose-alias up'
+alias fl='docker-compose-alias logs'
+alias fp='docker-compose-alias ps'
+alias fb='docker-compose-alias build'
 
 # Docker Stats and Helpers
 
