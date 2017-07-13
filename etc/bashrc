@@ -343,7 +343,9 @@ docker-compose-alias() {
   local COMMAND="$1"
   shift
   local FILE=""
-  if [ "$1" == "--file" ] || [ "$1" == "-f" ]; then
+  if [ "$1" == "--" ]; then
+    shift
+  elif [[ -n "$2" && ( "$1" == "--file" || "$1" == "-f" ) ]]; then
     FILE="$2"
     shift
     shift
