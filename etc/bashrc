@@ -433,6 +433,7 @@ alias npmls='echo -e "${COLOR_GREEN}nvm -> $(nvmstatus) ${COLOR_NC}";npm ls -g -
 #alias nrn='npm run'
 alias nr='npm run'
 alias npmpu='npm prune; npm update'
+alias npmp='npm prune; npm install'
 
 # Misc
 alias reloadbash='source ~/.bash_profile'
