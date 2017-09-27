@@ -336,7 +336,7 @@ alias drmirf='docker rmi -f $(docker images -q)'
 # Docker Volumes
 alias dlsv='docker volume ls'
 alias drmv='docker volume rm'
-alias drmp='docker volume prune'
+alias drmvp='docker volume prune'
 
 # Docker Compose
 alias fig='docker-compose'
