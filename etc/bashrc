@@ -333,6 +333,11 @@ alias drmidf='docker rmi -f $(docker images -q --filter dangling=true)'
 alias drmir='docker rmi $(docker images -q)'
 alias drmirf='docker rmi -f $(docker images -q)'
 
+# Docker Volumes
+alias dlsv='docker volume ls'
+alias drmv='docker volume rm'
+alias drmp='docker volume prune'
+
 # Docker Compose
 alias fig='docker-compose'
 alias frmrf='docker-compose stop; docker-compose rm -f'
