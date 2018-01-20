@@ -311,22 +311,23 @@ alias la='ls -a'
 alias lla='ls -lah'
 
 # Docker Machine
-alias dm='docker-machine'
-alias dmls='docker-machine ls'
+#alias dm='docker-machine'
+#alias dmls='docker-machine ls'
 
 # Dinghy
-alias dng='dinghy'
+#alias dng='dinghy'
 
 # Docker
-alias d='docker'
-alias dls='docker ps'
+#alias d='docker'
+#alias dls='docker ps'
 alias dps='docker ps'
-alias dlsa='docker ps -a'
+#alias dlsa='docker ps -a'
 alias dpsa='docker ps -a'
 alias drmrf='docker ps -a -q | xargs docker stop; docker ps -a -q | xargs docker rm'
 
 # Docker Images
-alias dlsi='docker images'
+#alias dlsi='docker images'
+alias dimg='docker images'
 alias drmi='docker rmi'
 alias drmid='docker rmi $(docker images -q --filter dangling=true)'
 alias drmidf='docker rmi -f $(docker images -q --filter dangling=true)'
@@ -334,14 +335,17 @@ alias drmir='docker rmi $(docker images -q)'
 alias drmirf='docker rmi -f $(docker images -q)'
 
 # Docker Volumes
-alias dlsv='docker volume ls'
-alias drmv='docker volume rm'
-alias drmvp='docker volume prune'
+#alias dlsv='docker volume ls'
+alias dvol='docker volume ls'
+#alias drmv='docker volume rm'
+alias dvrm='docker volume rm'
+#alias drmvp='docker volume prune'
+alias dvp='docker volume prune'
 
 # Docker Compose
 alias fig='docker-compose'
 alias frmrf='docker-compose stop; docker-compose rm -f'
-alias fls='docker-compose ps'
+#alias fls='docker-compose ps'
 alias fps='docker-compose ps'
 
 docker-compose-alias() {
