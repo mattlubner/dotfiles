@@ -12,7 +12,7 @@ fi
 
 
 
-# Colors ----------------------------------------------------------
+# Colors ----------------------------------------------------------------------
 export TERM=xterm-color
 export GREP_OPTIONS='--color=auto' GREP_COLOR='1;32'
 export CLICOLOR=1
@@ -69,7 +69,7 @@ alias colors="eval $(echo "echo -ne \"\""; set | awk 'BEGIN { FS="="; } /^COLOR_
 
 
 
-# History ----------------------------------------------------------
+# History ---------------------------------------------------------------------
 export HISTCONTROL=ignoredups
 #export HISTCONTROL=erasedups
 export HISTFILESIZE=3000
@@ -83,7 +83,7 @@ hf(){
 
 if [ $IS_INTERACTIVE = 'true' ] ; then # Interactive shell only
 
-  # Input stuff -------------------------------------------------------
+  # Input stuff ---------------------------------------------------------------
   bind "set completion-ignore-case on" # note: bind used instead of sticking these in .inputrc
   bind "set show-all-if-ambiguous On" # show list automatically, without double tab
   bind "set bell-style none" # no bell
@@ -100,7 +100,7 @@ if [ $IS_INTERACTIVE = 'true' ] ; then # Interactive shell only
 
 
 
-  # Completion -------------------------------------------------------
+  # Completion ----------------------------------------------------------------
 
   GIT_PS1=""
   # Turn on advanced bash completion if the file exists
@@ -152,7 +152,7 @@ if [ $IS_INTERACTIVE = 'true' ] ; then # Interactive shell only
 
 
 
-  # Prompts ----------------------------------------------------------
+  # Prompts -------------------------------------------------------------------
   #git_dirty_flag() {
     #git status 2> /dev/null | grep -c : | awk '{if ($1 > 0) print "⚡"}'
   #}
@@ -220,7 +220,7 @@ fi
 
 
 
-# Navigation -------------------------------------------------------
+# Navigation ------------------------------------------------------------------
 alias ..='cd ..'
 alias ...='cd .. ; cd ..'
 cl() { cd $1; ls -la; }
@@ -244,7 +244,7 @@ shopt -s cdable_vars # set the bash option so that no '$' is required when using
 
 
 
-# Editors ----------------------------------------------------------
+# Editors ---------------------------------------------------------------------
 if [ "$OS" = "darwin" ] ; then
   # OS-X SPECIFIC - TextMate, w is to wait for window to close
   #export EDITOR='mate -w'
@@ -272,7 +272,7 @@ alias edit='$EDITOR'
 
 
 
-# Security ---------------------------------------------------------
+# Security --------------------------------------------------------------------
 
 # Folder shared by a group
 # chmod g+s directory
@@ -284,7 +284,7 @@ alias edit='$EDITOR'
 
 
 
-# Sluething----------------------------------------------------
+# Sluething--------------------------------------------------------------------
 findportuser() {
   lsof -i :"$1"
 }
@@ -303,7 +303,7 @@ monitor_traffic(){
 
 
 
-# Other aliases ----------------------------------------------------
+# Other aliases ---------------------------------------------------------------
 
 # Directory Listing
 alias ll='ls -hl'
@@ -560,7 +560,7 @@ fi
 
 
 
-# Ruby ----------------------------------------------------
+# Ruby ------------------------------------------------------------------------
 
 # RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
@@ -578,7 +578,7 @@ alias spin_kicker="kicker -r rails -b 'spin push'"
 
 
 
-# Node ----------------------------------------------------
+# Node ------------------------------------------------------------------------
 
 # NVM
 export NVM_DIR="${HOME}/.nvm"
@@ -612,4 +612,3 @@ fi
 #elif
 #else
 #fi
-
