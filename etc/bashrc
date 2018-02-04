@@ -310,23 +310,13 @@ alias ll='ls -hl'
 alias la='ls -a'
 alias lla='ls -lah'
 
-# Docker Machine
-#alias dm='docker-machine'
-#alias dmls='docker-machine ls'
-
-# Dinghy
-#alias dng='dinghy'
-
 # Docker
-#alias d='docker'
-#alias dls='docker ps'
 alias dps='docker ps'
-#alias dlsa='docker ps -a'
 alias dpsa='docker ps -a'
-alias drmrf='docker ps -a -q | xargs docker stop; docker ps -a -q | xargs docker rm'
+alias drmrf='docker ps -aq --filter status=running | xargs docker stop; docker ps -aq | xargs docker rm'
+alias drms='docker ps -aq --filter status=exited | xargs docker rm'
 
 # Docker Images
-#alias dlsi='docker images'
 alias dimg='docker images'
 alias drmi='docker rmi'
 alias drmid='docker rmi $(docker images -q --filter dangling=true)'
@@ -335,9 +325,7 @@ alias drmir='docker rmi $(docker images -q)'
 alias drmirf='docker rmi -f $(docker images -q)'
 
 # Docker Volumes
-#alias dlsv='docker volume ls'
 alias dvol='docker volume ls'
-#alias drmv='docker volume rm'
 alias dvrm='docker volume rm'
 #alias drmvp='docker volume prune'
 alias dvp='docker volume prune'
@@ -345,7 +333,6 @@ alias dvp='docker volume prune'
 # Docker Compose
 alias fig='docker-compose'
 alias frmrf='docker-compose stop; docker-compose rm -f'
-#alias fls='docker-compose ps'
 alias fps='docker-compose ps'
 
 docker-compose-alias() {
@@ -444,7 +431,7 @@ alias npmls='echo -e "${COLOR_GREEN}nvm -> $(nvmstatus) ${COLOR_NC}";npm ls -g -
 alias nr='npm run'
 alias npmpu='npm prune; npm update'
 alias npmpi='npm prune; npm install'
-alias lint='npm run lint'
+# alias lint='npm run lint'
 
 # Misc
 alias reloadbash='source ~/.bash_profile'
