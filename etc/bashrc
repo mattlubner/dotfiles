@@ -366,6 +366,7 @@ alias fl='docker-compose-alias logs'
 alias fp='docker-compose-alias ps'
 alias fb='docker-compose-alias build'
 alias fr='docker-compose-alias restart'
+alias fud='docker-compose-alias up -d'
 
 # Docker Stats and Helpers
 
