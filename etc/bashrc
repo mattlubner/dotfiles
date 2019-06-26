@@ -438,6 +438,7 @@ alias npmpi='npm prune; npm install'
 # Misc
 alias reloadbash='source ~/.bash_profile'
 alias clearreloadbash='clear;source ~/.bash_profile'
+alias tfdelta="terraform plan | awk -F\"\\\"\" '$4 != $2 { print $0 }'"
 alias ducks='du -cksh * | sort -rn|head -11' # Lists folders and files sizes in the current folder
 alias m='more'
 alias top='top -o cpu' # os x
