@@ -23,3 +23,6 @@ brew "terraform@0.11"
 brew "watchman"
 brew "wget"
 brew "yarn"
+
+cask "virtualbox"
+cask "vagrant"
