@@ -1,0 +1,17 @@
+install applesimutils
+install aws-elasticbeanstalk
+install awscli
+install bash-completion
+install coocapods
+install dnsmasq
+install git
+install git-lfs
+install gradle
+install jenv
+install node
+install openssl
+install rename
+install terraform@0.11
+install watchman
+install wget
+install yarn
