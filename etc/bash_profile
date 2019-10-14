@@ -47,7 +47,7 @@ echo -ne "${COLOR_GRAY}"
 # echo -ne "System Time: "; date
 echo -ne "Uptime: "; uptime
 echo -e "Kernel:" `uname -smr`
-echo -e "Shell: $($(echo ${SHELL}) --version|sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/; /g')"
+echo -e "Shell: $($(echo ${0}) --version|sed -e ':a' -e 'N' -e '$!ba' -e 's/\n/; /g')"
 if [[ -s $HOME/.nvm/nvm.sh ]]; then
   echo -ne "Nvm: "; nvmstatus
 fi
