@@ -1,17 +1,25 @@
-install applesimutils
-install aws-elasticbeanstalk
-install awscli
-install bash-completion
-install coocapods
-install dnsmasq
-install git
-install git-lfs
-install gradle
-install jenv
-install node
-install openssl
-install rename
-install terraform@0.11
-install watchman
-install wget
-install yarn
+tap "homebrew/cask"
+tap "homebrew/cask-versions"
+tap "homebrew/services"
+# tap "codekitchen/dinghy"
+# tap "heroku/brew"
+tap "josegonzalez/php"
+tap "wix/brew"
+
+brew "applesimutils"
+brew "aws-elasticbeanstalk"
+brew "awscli"
+brew "bash-completion"
+brew "coocapods"
+brew "dnsmasq"
+brew "git"
+brew "git-lfs"
+brew "gradle"
+brew "jenv"
+brew "node"
+brew "openssl"
+brew "rename"
+brew "terraform@0.11"
+brew "watchman"
+brew "wget"
+brew "yarn"
