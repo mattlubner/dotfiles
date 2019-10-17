@@ -24,5 +24,7 @@ brew "watchman"
 brew "wget"
 brew "yarn"
 
+cask "adoptopenjdk8"
 cask "virtualbox"
 cask "vagrant"
+cask "java8"
