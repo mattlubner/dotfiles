@@ -431,6 +431,7 @@ dstat() {
 alias gs='git status'
 alias gbrv='git branch -vv'
 alias gvis='git visual' # same as `gittower .`
+alias gviz='git visual' # same as `gittower .`
 alias gdff='git diff'
 alias gdfft='git difftool'
 alias gmrg='git merge'
